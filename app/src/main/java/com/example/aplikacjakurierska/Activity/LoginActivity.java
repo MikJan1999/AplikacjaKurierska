@@ -25,37 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        initializeComponents();
+
     }
 
-    private void initializeComponents() {
-       TextInputEditText editName = findViewById(R.id.editTextTextPersonName);
-       TextInputEditText editUsername = findViewById(R.id.editTextTextPersonUsername);
-        MaterialButton buttonSAve = findViewById(R.id.button);
-RetrofitServ retrofitServ = new RetrofitServ();
-        UserApi userApi = retrofitServ.getRetrofit().create(UserApi.class);
-        buttonSAve.setOnClickListener(view -> {
-            String name = String.valueOf(editName.getText());
-            String username = String.valueOf(editUsername.getText());
 
-            User user = new User();
-            user.setName(name);
-            user.setUsername(username);
-userApi.newUSer(user)
-        .enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                Toast.makeText(LoginActivity.this, "Pomyślnie zapisano", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "Nie zapisano", Toast.LENGTH_SHORT).show();
-                Logger.getLogger(LoginActivity.this.getPackageName()).log(Level.SEVERE,"Error",t);
-            }
-        });
-
-
-        });
-    }
 }
