@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+android:layout_gravity="center"
+    tools:context=".Activity.MainNewActivity"
+    android:background="@drawable/background_main">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="80dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonViewProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="83dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="62dp"
+            android:layout_marginTop="106dp"
+            android:layout_marginEnd="62dp"
+            android:layout_marginBottom="394dp"
+            android:background="@drawable/button_add_product"
+            android:fontFamily="serif"
+            android:text="PRZEGLĄD PRODUKTÓW"
+            android:textColor="#FF521616"
+            android:textSize="24dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="298dp"
+            android:layout_height="51dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="59dp"
+            android:layout_marginTop="38dp"
+            android:layout_marginEnd="49dp"
+            android:layout_marginBottom="260dp"
+            android:fontFamily="serif"
+            android:gravity="center"
+            android:text="OGŁOSZENIA"
+            android:textColor="#521616"
+            android:textSize="35dp"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="361dp"
+            android:layout_height="155dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="39dp"
+            android:layout_marginEnd="41dp"
+            android:layout_marginBottom="100dp"
+            android:background="@drawable/frame_select"
+            android:padding="10dp"
+            android:text="Gówno zasrane i wgl"
+            android:textColor="#470F0F"
+            android:textSize="14dp"
+
+            app:fontFamily="monospace"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="170dp"
+            android:layout_height="122dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="119dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="122dp"
+            android:layout_marginBottom="382dp"
+            android:background="@drawable/frame_announcements"
+            app:srcCompat="@drawable/ddddu" />
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

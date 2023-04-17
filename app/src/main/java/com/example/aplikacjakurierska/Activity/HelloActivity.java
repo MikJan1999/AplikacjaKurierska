@@ -6,19 +6,26 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.aplikacjakurierska.R;
+import com.google.android.material.textview.MaterialTextView;
 
 public class HelloActivity extends AppCompatActivity {
-private ConstraintLayout hello;
-    @SuppressLint({"WrongViewCast", "MissingInflatedId"})
+private Button hello;
+    Animation scaleUp,scaleDown;
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hello);
-        hello = findViewById(R.id.hello);
-
+        hello =  findViewById(R.id.hello);
         hello.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -26,4 +33,20 @@ private ConstraintLayout hello;
             }
         });
     }
+
+    private void motiveButton(){
+        hello = findViewById(R.id.hello);
+        scaleUp = AnimationUtils.loadAnimation(this,R.anim.scale_button);
+        scaleDown = AnimationUtils.loadAnimation(this,R.anim.scale_down_button);
+        hello.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    hello.startAnimation(scaleUp);
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    hello.startAnimation(scaleDown);
+                }
+                return false;
+            }
+        });}
 }

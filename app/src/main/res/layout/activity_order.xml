@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.OrderAcitivty"
+    android:background="@drawable/background_main"
+    >
+
+    <androidx.recyclerview.widget.RecyclerView
+android:background="@drawable/frame_select"
+
+        android:id="@+id/product_list_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonBackToProduct"
+        android:layout_width="145dp"
+        android:layout_height="39dp"
+        android:layout_above="@+id/buttonloggin"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="-134dp"
+        android:background="@drawable/buttonhello"
+        android:text="złóż zamówienie"
+        app:backgroundTint="#02883E"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.939"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonloggin"
+        android:layout_width="200dp"
+        android:layout_height="49dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="104dp"
+        android:layout_marginBottom="111dp"
+        android:background="@drawable/buttonhello"
+        android:text="Wróć do sklepu "
+        app:backgroundTint="#02883E"
+        app:layout_constraintBottom_toTopOf="@+id/buttonBackToProduct"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</RelativeLayout>

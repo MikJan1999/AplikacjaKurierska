@@ -100,4 +100,6 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="arkadiusz_zajac">Arkadiusz Zajac</string>
+    <string name="password">password</string>
 </resources>
