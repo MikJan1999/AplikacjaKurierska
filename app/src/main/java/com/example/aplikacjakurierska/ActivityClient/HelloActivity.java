@@ -1,7 +1,6 @@
-package com.example.aplikacjakurierska.Activity;
+package com.example.aplikacjakurierska.ActivityClient;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -11,11 +10,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.aplikacjakurierska.R;
-import com.google.android.material.textview.MaterialTextView;
 
 public class HelloActivity extends AppCompatActivity {
 private Button hello;

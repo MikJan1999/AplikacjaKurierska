@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item>
+    <products>
     <shape>
         android:shape="rectangle"
 <stroke android:width="3dp"/>
 <corners android:radius="40dp"/>
     </shape>
 <color android:color="#E01D1D"/>
-</item>
+</products>
 </selector>

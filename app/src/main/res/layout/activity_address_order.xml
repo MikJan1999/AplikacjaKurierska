@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.OrderAdressActivity"
+    tools:context=".ActivityClient.OrderAdressActivity"
     android:background="@drawable/background_main"
   >
 
     <include
-        android:id="@+id/toolbarAdressOrder"
-        layout="@layout/toolbar_adress_order"
+        android:id="@+id/toolbarBack"
+        layout="@layout/toolbar_back"
 
         app:layout_constraintBottom_toTopOf="@+id/streetAddress"
         tools:layout_editor_absoluteX="-16dp" />
@@ -34,10 +34,8 @@
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/name_lastName"
         android:layout_width="325dp"
-
         android:layout_height="46dp"
         android:hint="Imię i Nazwisko"
-
         app:layout_constraintBottom_toTopOf="@+id/streetAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +97,7 @@
         android:layout_marginTop="40dp"
         android:gravity="center"
         android:backgroundTint="#277A2A"
-        android:text="Zapisz zmiany"
+        android:text="Zapisz"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

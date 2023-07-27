@@ -1,4 +1,4 @@
-package com.example.aplikacjakurierska.model;
+package com.example.aplikacjakurierska.retrofit;
 
 import com.google.gson.Gson;
 
@@ -18,7 +18,7 @@ initializeRetrofit();
 private void  initializeRetrofit(){
 
     retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.0.227:8070")
+            .baseUrl("http://192.168.137.1:8080")
             .addConverterFactory(GsonConverterFactory.create(new Gson()))
             .build();
 }

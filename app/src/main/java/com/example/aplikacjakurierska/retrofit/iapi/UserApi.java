@@ -1,6 +1,6 @@
-package com.example.aplikacjakurierska.model;
+package com.example.aplikacjakurierska.retrofit.iapi;
 
-import android.hardware.lights.LightsManager;
+import com.example.aplikacjakurierska.retrofit.model.User;
 
 import java.util.List;
 

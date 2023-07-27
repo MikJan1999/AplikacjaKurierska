@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.HelloActivity">
+    tools:context=".ActivityClient.HelloActivity">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -41,17 +41,17 @@
         android:layout_height="132dp"
         android:gravity="center"
         android:shadowColor="#988080"
-        android:text="Gospodarstwo sadownicze Arkadiusz Zając"
+        android:text="Sadownicze"
         android:textColor="#F8E00A"
 
         android:textSize="31sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.416"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.328" />
+        app:layout_constraintVertical_bias="0.325" />
 
     <Button
         android:id="@+id/hello"

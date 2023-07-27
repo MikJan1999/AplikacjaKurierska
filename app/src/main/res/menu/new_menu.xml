@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/new_menu">
+
     <item
         android:id="@+id/historyordermenu"
         android:title="Historia zamówień"

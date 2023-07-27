@@ -15,24 +15,32 @@
         android:theme="@style/Theme.AplikacjaKurierska"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
         <activity
-            android:name=".Activity.ChooseProductActivity"
+            android:name=".ActivityClient.OrderAcitivty"
             android:exported="false" />
+
         <activity
-            android:name=".Activity.OrderAdressActivity"
+            android:name=".ActivityCustomer.ReviewProductActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".Activity.MainNewActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.LoginActivity"
+            android:name=".ActivityClient.HelloActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".Activity.OrderAcitivty"
+            android:name=".ActivityClient.MainNewActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".ActivityClient.LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".ActivityCustomer.AddingProductsCustomerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
+            android:windowSoftInputMode="adjustResize"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             tools:ignore="DuplicateActivity">
