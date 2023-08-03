@@ -16,16 +16,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
-        <activity
-            android:name=".ActivityClient.OrderAcitivty"
-            android:exported="false" />
+
 
         <activity
-            android:name=".ActivityCustomer.ReviewProductActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity
-            android:name=".ActivityClient.HelloActivity"
+            android:name=".ActivityClient.LoginActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
@@ -33,11 +27,23 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".ActivityClient.LoginActivity"
+            android:name=".ActivityClient.OrderAcitivty"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".ActivityCustomer.AddAdvertisementCustomer"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".ActivityCustomer.AddingProductsCustomerActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".ActivityCustomer.EditProductActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".ActivityClient.ChooseProductActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
             android:windowSoftInputMode="adjustResize"

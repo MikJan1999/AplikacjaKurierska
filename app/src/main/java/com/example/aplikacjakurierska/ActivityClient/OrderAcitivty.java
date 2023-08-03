@@ -33,31 +33,23 @@ private RecyclerView recyclerView;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
-recyclerView = findViewById(R.id.product_list_recycler);
-    loadDataProduct();
-
-
+        recyclerView = findViewById(R.id.product_list_recycler);
+        loadDataProduct();
         backtoMainButton1 = (Button) findViewById(R.id.buttonBackToProduct);
         backtoMainButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(OrderAcitivty.this,MainNewActivity.class));
-            }
-        });
-    }
-
-
-
+            }});}
 
     private void loadDataProduct() {
         RetrofitServ retrofitServ = new RetrofitServ();
         ProductApi itemApi = retrofitServ.getRetrofit().create(ProductApi.class);
-        itemApi.getAll()
-        .enqueue(new Callback<List<Product>>() {
+        itemApi.getAll().enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
             populateListView(response.body());
-                Toast.makeText(OrderAcitivty.this, "Super", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderAcitivty.this, "Succesfull", Toast.LENGTH_SHORT).show();
             }
 
             @Override

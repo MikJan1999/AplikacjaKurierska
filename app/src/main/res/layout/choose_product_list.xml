@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/main_container"
-        android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_container"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/frame_select"
@@ -13,7 +13,7 @@ android:id="@+id/main_container"
 
     <ImageView
         android:src="@drawable/photo"
-        android:id="@+id/image_customer"
+        android:id="@+id/imageCustomerChoose"
         android:layout_width="145dp"
         android:layout_height="145dp">
 
@@ -21,28 +21,14 @@ android:id="@+id/main_container"
 
 
     <TextView
-        android:id="@+id/productName"
+        android:id="@+id/productNameChoose"
         android:layout_width="145dp"
         android:layout_height="wrap_content"
         android:textColor="#000000"
         android:textSize="30dp"
-         />
-    <TextView
-        android:layout_width="145dp"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:textSize="16dp"
-        android:text="Data modyfikacji"
-        android:gravity="center"
-        android:textStyle="bold"
         />
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="145dp"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:textSize="16dp"
-        />
+
+
     <TextView
         android:layout_width="145dp"
         android:layout_height="wrap_content"
@@ -53,7 +39,7 @@ android:id="@+id/main_container"
         android:textStyle="bold"
         />
     <TextView
-        android:id="@+id/productPrice"
+        android:id="@+id/productPriceChoose"
         android:layout_width="145dp"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
@@ -70,7 +56,7 @@ android:id="@+id/main_container"
         android:textStyle="bold"
         />
     <TextView
-        android:id="@+id/productDescription"
+        android:id="@+id/productDescriptionChoose"
         android:layout_width="145dp"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"

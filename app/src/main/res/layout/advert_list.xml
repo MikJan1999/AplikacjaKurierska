@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
-
-    >
+android:padding="10dp"  >
 
     <TextView
         android:id="@+id/date"
@@ -14,15 +12,16 @@
         android:layout_height="30dp"
         android:textColor="#000000"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="16sp"
+        android:textSize="17dp"
         app:layout_constraintBottom_toTopOf="@+id/advert"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/advert"
-        android:layout_width="359dp"
-        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:textColor="#000000"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

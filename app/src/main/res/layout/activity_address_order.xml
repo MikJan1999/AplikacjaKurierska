@@ -22,7 +22,7 @@
         android:layout_marginTop="100dp"
         android:fontFamily="serif"
         android:gravity="center"
-        android:text="Skonfiguruj swój adres na który ma być zrealizowana dostawa"
+        android:text="Skonfiguruj adres dostawy"
         android:textColor="#9CC56C"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"

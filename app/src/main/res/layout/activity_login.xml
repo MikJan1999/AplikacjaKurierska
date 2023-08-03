@@ -91,7 +91,7 @@
         android:layout_height="wrap_content"
         android:text="LOGOWANIE"
         android:textColor="#02883E"
-        android:textSize="37dp"
+        android:textSize="28dp"
         android:fontFamily="serif"
         app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,6 +1,7 @@
 package com.example.aplikacjakurierska.ActivityClient;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,8 +17,10 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
+import com.example.aplikacjakurierska.ActivityCustomer.AddAdvertisementCustomer;
 import com.example.aplikacjakurierska.ActivityCustomer.AddingProductsCustomerActivity;
 import com.example.aplikacjakurierska.ActivityCustomer.AdvertisementAdapter;
+import com.example.aplikacjakurierska.ActivityCustomer.ProductCustomerAdapter;
 import com.example.aplikacjakurierska.R;
 import com.example.aplikacjakurierska.retrofit.RetrofitServ;
 import com.example.aplikacjakurierska.retrofit.iapi.GeneralAdvertisementApi;
@@ -31,8 +34,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainNewActivity extends AppCompatActivity {
-
+public class MainNewActivity extends AppCompatActivity implements ProductCustomerAdapter.OnStudyListener {
+    private AdvertisementAdapter.OnStudyListener monStudyListener ;
+AdvertisementAdapter advertisementAdapter;
 Button buttonViewProduct;
 private List<GeneralAdvertisement> generalAdvertisements;
 Animation scaleUp,scaleDown;
@@ -42,6 +46,7 @@ Animation scaleUp,scaleDown;
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main_new);
             viewListProduct();
+            advertisementAdapter = new AdvertisementAdapter(generalAdvertisements,monStudyListener,false);
 buttonViewProduct = findViewById(R.id.buttonViewProduct);
 scaleUp = AnimationUtils.loadAnimation(this,R.anim.scale_button);
 scaleDown = AnimationUtils.loadAnimation(this,R.anim.scale_down_button);
@@ -84,25 +89,16 @@ buttonViewProduct.setOnTouchListener(new View.OnTouchListener() {
                 return super.onOptionsItemSelected(item);
         }
     }
-    public void getGeneralAdvertisement(){
-        RecyclerView generalAdvertisement = (RecyclerView) findViewById(R.id.recycle_advert);
-
-        }
-
-
 
     private void viewListProduct() {
         RecyclerView recyclerAdvert = findViewById(R.id.recycle_advert);
-
-
         RetrofitServ retrofitServ = new RetrofitServ();
         GeneralAdvertisementApi generalAdvertisementApi = retrofitServ.getRetrofit().create(GeneralAdvertisementApi.class);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerAdvert.setLayoutManager(linearLayoutManager);
-//        recyclertest.setLayoutManager(new LinearLayoutManager(this));
-
-
+        recyclerAdvert.addItemDecoration(new DividerItemDecoration(MainNewActivity.this,
+                DividerItemDecoration.VERTICAL));
         generalAdvertisementApi.getAll().enqueue(new Callback<List<GeneralAdvertisement>>() {
             @Override
             public void onResponse(Call<List<GeneralAdvertisement>> call, Response<List<GeneralAdvertisement>> response) {
@@ -111,27 +107,36 @@ buttonViewProduct.setOnTouchListener(new View.OnTouchListener() {
                     if(advertResponse !=null){
                         generalAdvertisements = advertResponse;
                         if(!generalAdvertisements.isEmpty()){
-                            AdvertisementAdapter advertisementAdapter = new AdvertisementAdapter(generalAdvertisements);
+                            AdvertisementAdapter advertisementAdapter = new AdvertisementAdapter(generalAdvertisements,monStudyListener,false);
                             recyclerAdvert.setAdapter(advertisementAdapter);
                         }else {
                             System.out.println("Pusta lista");
                         }
                     }else {
-                        System.out.println("odpowiddz Api jest pusta");
+                        System.out.println("Odpowiedź Api jest pusta");
                     }
                 }else {
                     System.out.println("błąd odpowiedzi");
                 }
-                Toast.makeText(MainNewActivity.this, "pomylsnie zapisano", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainNewActivity.this, "Pomyślnie zapisano", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<List<GeneralAdvertisement>> call, Throwable t) {
-                Toast.makeText(MainNewActivity.this, "Nie zapisano jest bład", Toast.LENGTH_SHORT).show();
-                Logger.getLogger(AddingProductsCustomerActivity.class.getName()).log(Level.SEVERE,"Dupa");
+                Toast.makeText(MainNewActivity.this, "Nie zapisano, jest bład", Toast.LENGTH_SHORT).show();
+                Logger.getLogger(AddingProductsCustomerActivity.class.getName()).log(Level.SEVERE,"Operacja nie powiodła się");
             }
         }) ;
     }
 
 
+    @Override
+    public void onStudyClick(int position) {
+
+    }
+
+    @Override
+    public void onStudyLongClick(int position, long id) {
+
+    }
 }

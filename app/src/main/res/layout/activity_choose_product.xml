@@ -16,8 +16,8 @@
         tools:layout_editor_absoluteY="0dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewClientProduct"
-        android:layout_width="381dp"
+        android:id="@+id/recyclerViewClientProductChoose"
+        android:layout_width="wrap_content"
         android:layout_height="515dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

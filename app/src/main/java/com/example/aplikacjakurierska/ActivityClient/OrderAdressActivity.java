@@ -1,27 +1,19 @@
 package com.example.aplikacjakurierska.ActivityClient;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 
 
 import com.example.aplikacjakurierska.ActivityCustomer.AddingProductsCustomerActivity;
 import com.example.aplikacjakurierska.R;
 import com.example.aplikacjakurierska.retrofit.RetrofitServ;
 import com.example.aplikacjakurierska.retrofit.iapi.AddressApi;
-import com.example.aplikacjakurierska.retrofit.iapi.ProductApi;
 import com.example.aplikacjakurierska.retrofit.model.Address;
-import com.example.aplikacjakurierska.retrofit.model.Product;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.logging.Level;

@@ -1,6 +1,8 @@
 package com.example.aplikacjakurierska.ActivityCustomer;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,8 +31,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddingProductsCustomerActivity extends AppCompatActivity implements ProductCustomerAdapter.OnStudyListener {
+public class AddingProductsCustomerActivity extends AppCompatActivity
+        implements ProductCustomerAdapter.OnStudyListener
+{
 
+String id;
 int SELECT_PICTURE =200;
 ImageView imageGallery;
 Button imageButton;
@@ -40,6 +44,7 @@ Button imageButton;
 
     private List<Product> productList;
     private ProductCustomerAdapter.OnStudyListener monStudylistener;
+
     FloatingActionButton floatingActionButton;
     ProductCustomerAdapter productCustomerAdapter;
 
@@ -51,7 +56,10 @@ Button imageButton;
         setContentView(R.layout.adding_products_customer_main);
         viewListProduct();
         addProductCustomers();
-       monStudylistener = this;}
+        monStudylistener = this;
+        productCustomerAdapter = new ProductCustomerAdapter(new ArrayList<>(), monStudylistener,true);
+
+    }
 
     private void addProductCustomers() {
         floatingActionButton = findViewById(R.id.floatingActionButtonAdd);
@@ -100,6 +108,8 @@ Button imageButton;
                     }
 
                 });
+                Intent intent = new Intent(getApplicationContext(), AddingProductsCustomerActivity.class);
+                startActivity(intent);
 
             });
 
@@ -110,7 +120,7 @@ Button imageButton;
     }
 
 
-    private  void viewListProduct() {
+    public   void viewListProduct() {
         RecyclerView recyclertest = findViewById(R.id.recyclerViewCustomerProduct);
         RetrofitServ retrofitServ = new RetrofitServ();
         ProductApi productApi = retrofitServ.getRetrofit().create(ProductApi.class);
@@ -126,7 +136,7 @@ Button imageButton;
                     if(productResponse !=null){
                         productList = productResponse;
                         if(!productList.isEmpty()){
-                            productCustomerAdapter = new ProductCustomerAdapter(productList,monStudylistener);
+                            productCustomerAdapter = new ProductCustomerAdapter(productList,monStudylistener,true);
                             recyclertest.setAdapter(productCustomerAdapter);
 
 
@@ -139,12 +149,12 @@ Button imageButton;
                 }else {
                     System.out.println("błąd odpowiedzi");
                 }
-                Toast.makeText(AddingProductsCustomerActivity.this, "pomylsnie zapisano", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddingProductsCustomerActivity.this, "Pomyślnie zapisano", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-                Toast.makeText(AddingProductsCustomerActivity.this, "Nie zapisano jest bład", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddingProductsCustomerActivity.this, "Wystąpił błąd", Toast.LENGTH_SHORT).show();
                 Logger.getLogger(AddingProductsCustomerActivity.class.getName()).log(Level.SEVERE,"Błąd");
             }
 
@@ -177,7 +187,7 @@ Button imageButton;
     @Override
     public void onStudyClick(int position) {
         Product p = productList.get(position);
-        Intent intent = new Intent(getApplicationContext(), ReviewProductActivity.class);
+        Intent intent = new Intent(getApplicationContext(), EditProductActivity.class);
         intent.putExtra("productName",p.getProductName());
         intent.putExtra("productPrice",p.getProductPrice().toString());
         intent.putExtra("productDescription",p.getProductDescription());
@@ -186,6 +196,47 @@ Button imageButton;
     }
 
 
+
+    @Override
+    public void onStudyLongClick(int position, long id) {
+        Product p = productList.get(position);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddingProductsCustomerActivity.this)
+                .setTitle("Usuń produkt")
+                        .setIcon(R.drawable.delete_icon)
+                                .setMessage("Czy na pewno usunąć ten produkt ?")
+                                        .setPositiveButton("TAK", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                RetrofitServ retrofitServ = new RetrofitServ();
+                                                ProductApi productApi = retrofitServ.getRetrofit().create(ProductApi.class);
+
+                                                    productApi.deleteById(Long.valueOf(id)).enqueue(new Callback<Void>() {
+                                                        @Override
+                                                        public void onResponse(Call<Void> call, Response<Void> response) {
+                                                            System.out.println("git");
+
+
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure(Call<Void> call, Throwable t) {
+
+                                                        }
+                                                    });
+                                                Intent intent = new Intent(getApplicationContext(), AddingProductsCustomerActivity.class);
+                                                startActivity(intent);
+
+                                            };
+                                        })
+                                                .setNegativeButton("NIE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+builder.show();
+    }
 
 
 }

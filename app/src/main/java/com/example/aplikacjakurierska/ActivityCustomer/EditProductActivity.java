@@ -11,23 +11,26 @@ import com.example.aplikacjakurierska.R;
 import com.example.aplikacjakurierska.retrofit.RetrofitServ;
 import com.example.aplikacjakurierska.retrofit.iapi.ProductApi;
 import com.example.aplikacjakurierska.retrofit.model.Product;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-public class ReviewProductActivity extends AppCompatActivity  implements ProductCustomerAdapter.OnStudyListener {
+public class EditProductActivity extends AppCompatActivity implements ProductCustomerAdapter.OnStudyListener
+{
 
+public static final int  REQUEST_CODE_EDIT_PRODUCT = 0;
     Product productadd;
     private List<Product> productList;
+
     private TextView name,price,desc;
     String productName,productPrice,productDescription,createdAt,id;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        AddingProductsCustomerActivity addingProductsCustomerActivity = new AddingProductsCustomerActivity();
         setContentView(R.layout.review_product_activity);
-
         super.onCreate(savedInstanceState);
         Button backToMain = findViewById(R.id.backToMain);
         editProduct();
@@ -46,8 +49,11 @@ public class ReviewProductActivity extends AppCompatActivity  implements Product
             @Override
             public void onClick(View view) {
                 onBackPressed();
+
             }});}
-    private void editProduct() {
+
+
+    private Product editProduct() {
         Button buttonEdit = findViewById(R.id.buttonEditProductForSaleEdit);
         RetrofitServ retrofitServ = new RetrofitServ();
         ProductApi productApi = retrofitServ.getRetrofit().create(ProductApi.class);
@@ -62,33 +68,31 @@ public class ReviewProductActivity extends AppCompatActivity  implements Product
             productApi.editById(Long.valueOf(id), productadd).enqueue(new Callback<Product>() {
                 @Override
                 public void onResponse(Call<Product> call, Response<Product> response) {
-                    Toast.makeText(ReviewProductActivity.this, "Pomyślnie edytowano produkt", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(EditProductActivity.this, "Pomyślnie edytowano produkt", Toast.LENGTH_SHORT).show();
                 }
-
                 @Override
                 public void onFailure(Call<Product> call, Throwable t) {
-                    Toast.makeText(ReviewProductActivity.this, "Nie edytowano produktu", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProductActivity.this, "Nie edytowano produktu", Toast.LENGTH_SHORT).show();
                     Logger.getLogger(AddingProductsCustomerActivity.class.getName()).log(Level.SEVERE, "Error ");
                 }
-
             });
-
+            Intent intent = new Intent(getApplicationContext(), AddingProductsCustomerActivity.class);
+            startActivity(intent);
 
         });
 
+return null;
+    }
+
+
+    @Override
+    public void onStudyClick(int position) {
 
     }
 
     @Override
-    public void onStudyClick(int position) {
-        Product p = productList.get(position);
-        Intent intent = new Intent(getApplicationContext(), AddingProductsCustomerActivity.class);
-        intent.putExtra("productName",p.getProductName());
-        intent.putExtra("productPrice",p.getProductPrice().toString());
-        intent.putExtra("productDescription",p.getProductDescription());
-        intent.putExtra("id",p.getId());
-        startActivity(intent);
+    public void onStudyLongClick(int position, long id) {
+
     }
 }
 

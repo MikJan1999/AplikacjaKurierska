@@ -1,21 +1,26 @@
 package com.example.aplikacjakurierska.retrofit.model;
 
+import com.example.aplikacjakurierska.ActivityCustomer.AdvertisementAdapter;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 public class GeneralAdvertisement {
-    public GeneralAdvertisement() {
-    }
 
     private Long id;
     private String advertisement;
-    private Date dataOfAdding;
-//
-    public GeneralAdvertisement(Long id, String advertisement
-                                ,Date dataOfAdding) {
 
+    private Date updatedAt;
+
+
+    public GeneralAdvertisement() {
+    }
+
+
+    public GeneralAdvertisement(Long id, String advertisement, Date updatedAt) {
         this.id = id;
         this.advertisement = advertisement;
-        this.dataOfAdding = dataOfAdding;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -34,12 +39,12 @@ public class GeneralAdvertisement {
         this.advertisement = advertisement;
     }
 
-    public Date getDataOfAdding() {
-        return dataOfAdding;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setDataOfAdding(Date dataOfAdding) {
-        this.dataOfAdding = dataOfAdding;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
 
@@ -48,7 +53,7 @@ public class GeneralAdvertisement {
         return "GeneralAdvertisement{" +
                 "id=" + id +
                 ", advertisement='" + advertisement + '\'' +
-                ", dataOfAdding=" + dataOfAdding +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 }

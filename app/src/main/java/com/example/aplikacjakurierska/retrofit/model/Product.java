@@ -2,6 +2,7 @@ package com.example.aplikacjakurierska.retrofit.model;
 
 import android.graphics.Bitmap;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class Product {
@@ -11,21 +12,35 @@ public class Product {
     private Double productPrice;
     private byte [] productPictureUrl;
     private String productDescription;
+    private Date updatedAt;
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     //Czy produkt jest na sprzedaż czy został wycofany
+//    private Date createdAt;
 
 
-    private Date createdAt;
+    public Product(Long id, String productName, Double productPrice,String productDescription,
+//                   Date createdAt
+            Date updatedAt)
+    {
 
-    public Product(Long id, String productName, Double productPrice,String productDescription, Date createdAt) {
         this.id = id;
         this.productName = productName;
         this.productPrice = productPrice;
         this.productDescription = productDescription;
-
-        this.createdAt = createdAt;
+this.updatedAt = updatedAt;
+//        this.createdAt = createdAt;
     }
 
-    public Product(String names, String prices, String descriptions, String inStocks) {
+
+
+    public Product() {
     }
 
     @Override
@@ -34,22 +49,18 @@ public class Product {
                 "id=" + id +
                 ", productName='" + productName + '\'' +
                 ", productPrice=" + productPrice +
-                ", productPictureUrl='" + productPictureUrl + '\'' +
+                ", productPictureUrl=" + Arrays.toString(productPictureUrl) +
                 ", productDescription='" + productDescription + '\'' +
-                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
-
-    public Product() {
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
+//    public Date getCreatedAt() {
+//        return createdAt;
+//    }
+//
+//    public void setCreatedAt(Date createdAt) {
+//        this.createdAt = createdAt;
+//    }
 
     public Long getId() {
         return id;
