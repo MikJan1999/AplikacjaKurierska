@@ -36,6 +36,7 @@ public class Product {
         this.productDescription = productDescription;
 this.updatedAt = updatedAt;
 //        this.createdAt = createdAt;
+
     }
 
 

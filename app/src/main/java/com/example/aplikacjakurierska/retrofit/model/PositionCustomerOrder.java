@@ -10,15 +10,57 @@ public class PositionCustomerOrder {
     private Boolean isDelivered;
     private CustomerOrder customerOrder;
     private Product product;
+    private String pcoDesc;
+    private float priceAll;
 
-    public PositionCustomerOrder(Long id, float amount, Boolean isAccepted, Boolean isDelivered,
-                                 CustomerOrder customerOrder, Product product) {
+
+    public PositionCustomerOrder(Long id, float amount,
+                                 Boolean isAccepted,
+                                 Boolean isDelivered,
+                                 CustomerOrder customerOrder,
+                                 Product product,
+                                 String pcoDesc,float priceAll) {
         this.id = id;
         this.amount = amount;
         this.isAccepted = isAccepted;
         this.isDelivered = isDelivered;
         this.customerOrder = customerOrder;
         this.product = product;
+        this.pcoDesc = pcoDesc;
+        this.priceAll = priceAll;
+    }
+
+    @Override
+    public String toString() {
+        return "PositionCustomerOrder{" +
+                "id=" + id +
+                ", amount=" + amount +
+                ", isAccepted=" + isAccepted +
+                ", isDelivered=" + isDelivered +
+                ", customerOrder=" + customerOrder +
+                ", product=" + product +
+                ", pcoDesc='" + pcoDesc + '\'' +
+                ", priceAll=" + priceAll +
+                '}';
+    }
+
+    public float getPriceAll() {
+        return priceAll;
+    }
+
+    public void setPriceAll(float priceAll) {
+        this.priceAll = priceAll;
+    }
+
+    public String getPcoDesc() {
+        return pcoDesc;
+    }
+
+    public void setPcoDesc(String pcoDesc) {
+        this.pcoDesc = pcoDesc;
+    }
+
+    public PositionCustomerOrder() {
     }
 
     public Long getId() {
@@ -70,16 +112,5 @@ public class PositionCustomerOrder {
     }
 
 
-    @Override
-    public String toString() {
-        return "PositionCustomerOrder{" +
-                "id=" + id +
-                ", amount=" + amount +
-                ", isAccepted=" + isAccepted +
-                ", isDelivered=" + isDelivered +
-                ", customerOrder=" + customerOrder +
-                ", product=" + product +
-                '}';
-    }
 }
 

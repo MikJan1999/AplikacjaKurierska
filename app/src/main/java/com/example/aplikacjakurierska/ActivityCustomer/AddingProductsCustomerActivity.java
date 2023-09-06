@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -59,9 +60,12 @@ Button imageButton;
         monStudylistener = this;
         productCustomerAdapter = new ProductCustomerAdapter(new ArrayList<>(), monStudylistener,true);
 
+
     }
 
     private void addProductCustomers() {
+        SharedPreferences sp = getSharedPreferences("main",0);
+        String token1 = sp.getString("token", null);
         floatingActionButton = findViewById(R.id.floatingActionButtonAdd);
 
         floatingActionButton.setOnClickListener(view -> {
@@ -92,7 +96,7 @@ Button imageButton;
                 productadd.setProductName(nameproduct);
                 productadd.setProductPrice(Double.valueOf(priceproduct));
                 productadd.setProductDescription(descriptionproduct);
-                productApi.add(productadd).enqueue(new Callback<Product>() {
+                productApi.add("Bearer "+token1,productadd).enqueue(new Callback<Product>() {
                     @Override
                     public void onResponse(Call<Product> call, Response<Product> response) {
                         Toast.makeText(AddingProductsCustomerActivity.this, "Pomyślnie zapisano produkt", Toast.LENGTH_SHORT).show();
@@ -121,6 +125,10 @@ Button imageButton;
 
 
     public   void viewListProduct() {
+
+        SharedPreferences sp = getSharedPreferences("main",0);
+        String token1 = sp.getString("token", null);
+        System.out.println(token1);
         RecyclerView recyclertest = findViewById(R.id.recyclerViewCustomerProduct);
         RetrofitServ retrofitServ = new RetrofitServ();
         ProductApi productApi = retrofitServ.getRetrofit().create(ProductApi.class);
@@ -128,7 +136,7 @@ Button imageButton;
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclertest.setLayoutManager(linearLayoutManager);
 
-        productApi.getAll().enqueue(new Callback<List<Product>>() {
+        productApi.getAll("Bearer "+token1).enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if(response.isSuccessful()){
@@ -199,6 +207,9 @@ Button imageButton;
 
     @Override
     public void onStudyLongClick(int position, long id) {
+        SharedPreferences sp = getSharedPreferences("main",0);
+        String token1 = sp.getString("token", null);
+
         Product p = productList.get(position);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(AddingProductsCustomerActivity.this)
@@ -211,7 +222,7 @@ Button imageButton;
                                                 RetrofitServ retrofitServ = new RetrofitServ();
                                                 ProductApi productApi = retrofitServ.getRetrofit().create(ProductApi.class);
 
-                                                    productApi.deleteById(Long.valueOf(id)).enqueue(new Callback<Void>() {
+                                                    productApi.deleteById("Bearer "+token1,Long.valueOf(id)).enqueue(new Callback<Void>() {
                                                         @Override
                                                         public void onResponse(Call<Void> call, Response<Void> response) {
                                                             System.out.println("git");

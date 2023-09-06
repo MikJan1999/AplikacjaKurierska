@@ -48,6 +48,15 @@ Animation scaleUp,scaleDown;
             viewListProduct();
             advertisementAdapter = new AdvertisementAdapter(generalAdvertisements,monStudyListener,false);
 buttonViewProduct = findViewById(R.id.buttonViewProduct);
+buttonViewProduct.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent(MainNewActivity.this, ChooseProductActivity.class);
+startActivity(intent);
+    }
+
+});
+
 scaleUp = AnimationUtils.loadAnimation(this,R.anim.scale_button);
 scaleDown = AnimationUtils.loadAnimation(this,R.anim.scale_down_button);
 

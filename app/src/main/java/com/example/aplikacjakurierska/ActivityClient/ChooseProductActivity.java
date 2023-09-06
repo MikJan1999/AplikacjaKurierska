@@ -1,9 +1,12 @@
 package com.example.aplikacjakurierska.ActivityClient;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +25,11 @@ import com.example.aplikacjakurierska.ActivityCustomer.AddingProductsCustomerAct
 import com.example.aplikacjakurierska.ActivityCustomer.ProductCustomerAdapter;
 import com.example.aplikacjakurierska.R;
 import com.example.aplikacjakurierska.retrofit.RetrofitServ;
+import com.example.aplikacjakurierska.retrofit.iapi.CustomerOrderApi;
+import com.example.aplikacjakurierska.retrofit.iapi.PositionCustomerOrderApi;
 import com.example.aplikacjakurierska.retrofit.iapi.ProductApi;
+import com.example.aplikacjakurierska.retrofit.model.CustomerOrder;
+import com.example.aplikacjakurierska.retrofit.model.PositionCustomerOrder;
 import com.example.aplikacjakurierska.retrofit.model.Product;
 
 import java.util.ArrayList;
@@ -36,6 +43,10 @@ import retrofit2.Response;
 
 public class ChooseProductActivity extends AppCompatActivity implements ChooseProductAdapter.OnStudyListener {
     private List<Product> chooseproductList;
+    private List<PositionCustomerOrder> positionCustomerOrders = new ArrayList<>();
+
+    //wszystkie pozycje które przechowywane są w tej lisćie dopóki użytkownik nie utworzy zamówienia
+
     private ChooseProductAdapter.OnStudyListener monStudylistener;
     Button backtoMainButton;
     private TextView nameChoose,priceChoose;
@@ -48,7 +59,7 @@ ChooseProductAdapter chooseProductAdapter;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_product);
          backtoMainButton = (Button) findViewById(R.id.backToMin);
-        viewListProduct();
+//        viewListProduct();
         monStudylistener = this;
         chooseProductAdapter = new ChooseProductAdapter(new ArrayList<>(), monStudylistener);
 
@@ -64,48 +75,47 @@ ChooseProductAdapter chooseProductAdapter;
         });
     }
 
-    public   void viewListProduct() {
-        RecyclerView recyclertest = findViewById(R.id.recyclerViewClientProductChoose);
-        RetrofitServ retrofitServ = new RetrofitServ();
-        ProductApi productApi = retrofitServ.getRetrofit().create(ProductApi.class);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        recyclertest.setLayoutManager(linearLayoutManager);
-
-        productApi.getAll().enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                System.out.println(chooseproductList + "Listaaaaaaaaaaaaa");
-                if(response.isSuccessful()){
-                    List<Product> productResponse = response.body();
-                    if(productResponse !=null){
-                        chooseproductList = productResponse;
-                        if(!chooseproductList.isEmpty()){
-                            chooseProductAdapter = new ChooseProductAdapter(chooseproductList,monStudylistener);
-                            recyclertest.setAdapter(chooseProductAdapter);
-
-
-                        }else {
-                            System.out.println("Pusta lista");
-                        }
-                    }else {
-                        System.out.println("odpowiddz Api jest pusta");
-                    }
-                }else {
-                    System.out.println("błąd odpowiedzi");
-                }
-                Toast.makeText(ChooseProductActivity.this, "pomylsnie zapisano", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-                Toast.makeText(ChooseProductActivity.this, "Nie zapisano jest bład", Toast.LENGTH_SHORT).show();
-                Logger.getLogger(AddingProductsCustomerActivity.class.getName()).log(Level.SEVERE,"Błąd");
-            }
-
-        }) ;
-
-    }
+//    public   void viewListProduct() {
+//        RecyclerView recyclertest = findViewById(R.id.recyclerViewClientProductChoose);
+//        RetrofitServ retrofitServ = new RetrofitServ();
+//        ProductApi productApi = retrofitServ.getRetrofit().create(ProductApi.class);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+//        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+//        recyclertest.setLayoutManager(linearLayoutManager);
+//
+//        productApi.getAll().enqueue(new Callback<List<Product>>() {
+//            @Override
+//            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+//                if(response.isSuccessful()){
+//                    List<Product> productResponse = response.body();
+//                    if(productResponse !=null){
+//                        chooseproductList = productResponse;
+//                        if(!chooseproductList.isEmpty()){
+//                            chooseProductAdapter = new ChooseProductAdapter(chooseproductList,monStudylistener);
+//                            recyclertest.setAdapter(chooseProductAdapter);
+//
+//
+//                        }else {
+//                            System.out.println("Pusta lista");
+//                        }
+//                    }else {
+//                        System.out.println("odpowiddz Api jest pusta");
+//                    }
+//                }else {
+//                    System.out.println("błąd odpowiedzi");
+//                }
+//                Toast.makeText(ChooseProductActivity.this, "pomylsnie zapisano", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Product>> call, Throwable t) {
+//                Toast.makeText(ChooseProductActivity.this, "Nie zapisano jest bład", Toast.LENGTH_SHORT).show();
+//                Logger.getLogger(AddingProductsCustomerActivity.class.getName()).log(Level.SEVERE,"Błąd");
+//            }
+//
+//        }) ;
+//
+//    }
 
     @Override
     public void onStudyClick(int position) {
@@ -116,34 +126,31 @@ ChooseProductAdapter chooseProductAdapter;
         Dialog dialog = new Dialog(ChooseProductActivity.this);
         dialog.setContentView(R.layout.choose_cart_client_dialog);
         AppCompatButton button = dialog.findViewById(R.id.buttonEditProductChoose);
-        nameChoose =dialog.findViewById(R.id.nameProductChoose);
-        priceChoose =dialog.findViewById(R.id.priceProductChoose);
+        nameChoose = dialog.findViewById(R.id.nameProductChoose);
+        priceChoose = dialog.findViewById(R.id.priceProductChoose);
         descChoose = dialog.findViewById(R.id.descriptionProductChoose);
         nameChoose.setText(nameClicked);
         priceChoose.setText(priceClicked);
 
-
-
 //        imageGallery = dialog.findViewById(R.id.galleryImage);
 //        ImageView imageView = dialog.findViewById(R.id.galleryImage);
-
         NumberPicker numberPicker = dialog.findViewById(R.id.numberPickerChooseKG);
         numberPicker.setMinValue(1);
         numberPicker.setMaxValue(300);
         numberPicker.setValue(1);
 
-        RetrofitServ retrofitServ = new RetrofitServ();
-        ProductApi productApi = retrofitServ.getRetrofit().create(ProductApi.class);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-button.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
+                PositionCustomerOrder positionCustomerOrder = new PositionCustomerOrder();
+                RetrofitServ retrofitServ = new RetrofitServ();
+                positionCustomerOrder.setProduct(clickedProduct);
 
 
-
-    }
-});
-dialog.show();
+            }
+        });
+        dialog.show();
 
     }
 
@@ -152,6 +159,7 @@ dialog.show();
 
     }
 }
+
 
 
 

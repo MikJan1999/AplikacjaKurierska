@@ -7,17 +7,17 @@ public class CustomerOrder {
     private Long id;
     //czy zamówienie jest w koszyku
     private Boolean isCartShop;
-    //czy został sprzedany
-    private Boolean isSaled;
     private List<PositionCustomerOrder> positionCustomerOrders;
     private Address address;
 
     public CustomerOrder(Long id, Boolean isCartShop, Boolean isSaled, List<PositionCustomerOrder> positionCustomerOrders, Address address) {
         this.id = id;
         this.isCartShop = isCartShop;
-        this.isSaled = isSaled;
         this.positionCustomerOrders = positionCustomerOrders;
         this.address = address;
+    }
+
+    public CustomerOrder(List<PositionCustomerOrder> positionCustomerOrders) {
     }
 
     public Long getId() {
@@ -36,13 +36,7 @@ public class CustomerOrder {
         isCartShop = cartShop;
     }
 
-    public Boolean getSaled() {
-        return isSaled;
-    }
 
-    public void setSaled(Boolean saled) {
-        isSaled = saled;
-    }
 
     public List<PositionCustomerOrder> getPositionCustomerOrders() {
         return positionCustomerOrders;
@@ -65,7 +59,6 @@ public class CustomerOrder {
         return "CustomerOrder{" +
                 "id=" + id +
                 ", isCartShop=" + isCartShop +
-                ", isSaled=" + isSaled +
                 ", positionCustomerOrders=" + positionCustomerOrders +
                 ", address=" + address +
                 '}';

@@ -1,5 +1,6 @@
 package com.example.aplikacjakurierska.ActivityCustomer;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -54,6 +55,8 @@ public static final int  REQUEST_CODE_EDIT_PRODUCT = 0;
 
 
     private Product editProduct() {
+        SharedPreferences sp = getSharedPreferences("main",0);
+        String token1 = sp.getString("token", null);
         Button buttonEdit = findViewById(R.id.buttonEditProductForSaleEdit);
         RetrofitServ retrofitServ = new RetrofitServ();
         ProductApi productApi = retrofitServ.getRetrofit().create(ProductApi.class);
@@ -65,7 +68,7 @@ public static final int  REQUEST_CODE_EDIT_PRODUCT = 0;
             productadd.setProductName(nameproduct);
             productadd.setProductPrice(Double.valueOf(priceproduct));
             productadd.setProductDescription(descriptionproduct);
-            productApi.editById(Long.valueOf(id), productadd).enqueue(new Callback<Product>() {
+            productApi.editById("Bearer "+token1,Long.valueOf(id), productadd).enqueue(new Callback<Product>() {
                 @Override
                 public void onResponse(Call<Product> call, Response<Product> response) {
                     Toast.makeText(EditProductActivity.this, "Pomyślnie edytowano produkt", Toast.LENGTH_SHORT).show();

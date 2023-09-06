@@ -44,7 +44,8 @@ public ProductCustomerAdapter(List<Product> productList , ProductCustomerAdapter
     public void onBindViewHolder(ProductCustomerAdapter.ViewHolder holder, int position) {
         Product product = productList.get(position);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat dateFormat =
+                new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String formattedDate = dateFormat.format(product.getUpdatedAt());
         holder.date.setText(formattedDate);
         holder.productName.setText(product.getProductName());
