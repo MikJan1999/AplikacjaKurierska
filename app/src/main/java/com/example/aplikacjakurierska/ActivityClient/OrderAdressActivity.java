@@ -1,6 +1,7 @@
 package com.example.aplikacjakurierska.ActivityClient;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +40,10 @@ addOrderAddressClient();
         });
     }
     private void addOrderAddressClient() {
+        SharedPreferences sp = getSharedPreferences("main",0);
+        String token1 = sp.getString("token", null);
+
+
         Button saveButton = findViewById(R.id.saveAddress);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +69,7 @@ addOrderAddressClient();
                     addressAdd.setVillage(villages);
                     addressAdd.setNumberOfPhone(Integer.parseInt(phoneNumbers));
 
-                    addressApi.add(addressAdd).enqueue(new Callback<Address>() {
+                    addressApi.add(token1,addressAdd).enqueue(new Callback<Address>() {
                         @Override
                         public void onResponse(Call<Address> call, Response<Address> response) {
                             Toast.makeText(OrderAdressActivity.this, "Pomyślnie zapisano adres", Toast.LENGTH_SHORT).show();
