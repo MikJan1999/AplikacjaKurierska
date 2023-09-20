@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class Product {
 
@@ -13,35 +14,22 @@ public class Product {
     private byte [] productPictureUrl;
     private String productDescription;
     private Date updatedAt;
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    //Czy produkt jest na sprzedaż czy został wycofany
-//    private Date createdAt;
-
-
-    public Product(Long id, String productName, Double productPrice,String productDescription,
-//                   Date createdAt
-            Date updatedAt)
-    {
-
-        this.id = id;
-        this.productName = productName;
-        this.productPrice = productPrice;
-        this.productDescription = productDescription;
-this.updatedAt = updatedAt;
-//        this.createdAt = createdAt;
-
-    }
+    private List<PositionCustomerOrder> positionCustomerOrders;
 
 
 
     public Product() {
+    }
+
+    public Product(Long id, String productName, Double productPrice, byte[] productPictureUrl, String productDescription,
+                   Date updatedAt, List<PositionCustomerOrder> positionCustomerOrders) {
+        this.id = id;
+        this.productName = productName;
+        this.productPrice = productPrice;
+        this.productPictureUrl = productPictureUrl;
+        this.productDescription = productDescription;
+        this.updatedAt = updatedAt;
+        this.positionCustomerOrders = positionCustomerOrders;
     }
 
     @Override
@@ -53,15 +41,30 @@ this.updatedAt = updatedAt;
                 ", productPictureUrl=" + Arrays.toString(productPictureUrl) +
                 ", productDescription='" + productDescription + '\'' +
                 ", updatedAt=" + updatedAt +
+                ", positionCustomerOrders=" + positionCustomerOrders +
                 '}';
     }
-//    public Date getCreatedAt() {
-//        return createdAt;
-//    }
-//
-//    public void setCreatedAt(Date createdAt) {
-//        this.createdAt = createdAt;
-//    }
+
+    public List<PositionCustomerOrder> getPositionCustomerOrders() {
+        return positionCustomerOrders;
+    }
+
+    public void setPositionCustomerOrders(List<PositionCustomerOrder> positionCustomerOrders) {
+        this.positionCustomerOrders = positionCustomerOrders;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+
+
+
+
 
     public Long getId() {
         return id;

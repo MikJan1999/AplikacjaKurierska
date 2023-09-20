@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -100,6 +101,9 @@ buttonViewProduct.setOnTouchListener(new View.OnTouchListener() {
     }
 
     private void viewListProduct() {
+        SharedPreferences sp = getSharedPreferences("main",0);
+        String token1 = sp.getString("token", null);
+
         RecyclerView recyclerAdvert = findViewById(R.id.recycle_advert);
         RetrofitServ retrofitServ = new RetrofitServ();
         GeneralAdvertisementApi generalAdvertisementApi = retrofitServ.getRetrofit().create(GeneralAdvertisementApi.class);
@@ -108,7 +112,9 @@ buttonViewProduct.setOnTouchListener(new View.OnTouchListener() {
         recyclerAdvert.setLayoutManager(linearLayoutManager);
         recyclerAdvert.addItemDecoration(new DividerItemDecoration(MainNewActivity.this,
                 DividerItemDecoration.VERTICAL));
-        generalAdvertisementApi.getAll().enqueue(new Callback<List<GeneralAdvertisement>>() {
+        generalAdvertisementApi.getAll(
+                "Bearer "+token1
+        ).enqueue(new Callback<List<GeneralAdvertisement>>() {
             @Override
             public void onResponse(Call<List<GeneralAdvertisement>> call, Response<List<GeneralAdvertisement>> response) {
                 if(response.isSuccessful()){

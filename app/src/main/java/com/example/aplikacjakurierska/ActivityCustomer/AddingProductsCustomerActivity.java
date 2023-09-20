@@ -96,7 +96,9 @@ Button imageButton;
                 productadd.setProductName(nameproduct);
                 productadd.setProductPrice(Double.valueOf(priceproduct));
                 productadd.setProductDescription(descriptionproduct);
-                productApi.add("Bearer "+token1,productadd).enqueue(new Callback<Product>() {
+                productApi.add(
+//                        "Bearer "+token1,
+                        productadd).enqueue(new Callback<Product>() {
                     @Override
                     public void onResponse(Call<Product> call, Response<Product> response) {
                         Toast.makeText(AddingProductsCustomerActivity.this, "Pomyślnie zapisano produkt", Toast.LENGTH_SHORT).show();
@@ -136,7 +138,9 @@ Button imageButton;
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclertest.setLayoutManager(linearLayoutManager);
 
-        productApi.getAll("Bearer "+token1).enqueue(new Callback<List<Product>>() {
+        productApi.getAll(
+//                "Bearer "+token1
+        ).enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if(response.isSuccessful()){
@@ -222,7 +226,9 @@ Button imageButton;
                                                 RetrofitServ retrofitServ = new RetrofitServ();
                                                 ProductApi productApi = retrofitServ.getRetrofit().create(ProductApi.class);
 
-                                                    productApi.deleteById("Bearer "+token1,Long.valueOf(id)).enqueue(new Callback<Void>() {
+                                                    productApi.deleteById(
+//                                                            "Bearer "+token1,
+                                                            Long.valueOf(id)).enqueue(new Callback<Void>() {
                                                         @Override
                                                         public void onResponse(Call<Void> call, Response<Void> response) {
                                                             System.out.println("git");

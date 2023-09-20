@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,14 +13,16 @@
         android:theme="@style/Theme.AplikacjaKurierska"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
-
-<!--        <activity-->
-<!--        android:name=".ActivityClient.LoginActivity"-->
-<!--        android:exported="false"-->
-<!--        android:theme="@style/Theme.AppCompat.NoActionBar" />-->
         <activity
-            android:name=".ActivityClient.ChooseProductActivity"
+            android:name=".ActivityClient.HelloActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+<!--        <activity-->
+<!--        android:name=".ActivityClient.RegistrationActivity"-->
+<!--        android:exported="false"-->
+<!--            android:theme="@style/Theme.AppCompat.NoActionBar" />-->
+        <activity
+            android:name=".ActivityClient.LoginActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
@@ -30,26 +30,26 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".ActivityClient.OrderAcitivty"
+            android:name=".ActivityClient.ChooseProductActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+<!--        <activity-->
+<!--            android:name=".ActivityClient.SummaryOrder"-->
+<!--            android:exported="false"-->
+<!--            android:theme="@style/Theme.AppCompat.NoActionBar" />-->
+<!--        <activity-->
+<!--            android:name=".ActivityCustomer.AddingProductsCustomerActivity"-->
+<!--            android:exported="false"-->
+<!--            android:theme="@style/Theme.AppCompat.NoActionBar" />-->
+        <activity
+            android:name=".ActivityClient.OrderAdressActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".ActivityCustomer.AddAdvertisementCustomer"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity
-            android:name=".ActivityCustomer.AddingProductsCustomerActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity
-            android:name=".ActivityCustomer.EditProductActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity
-            android:name=".ActivityClient.LoginActivity"
+            android:name=".ActivityCustomer.AllOrderActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             tools:ignore="DuplicateActivity">
@@ -59,5 +59,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

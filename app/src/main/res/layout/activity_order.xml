@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
+    android:id="@+id/activityOrders"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,63 +11,84 @@
     android:background="@drawable/background_main"
     >
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="602dp"
+        android:gravity="center"
+        android:text="TWÓJ KOSZYK"
+        android:textSize="25dp"
+        android:textStyle="bold"></TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="510dp"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="139dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="NAZWA"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#000000" />
+        <TextView
+
+            android:layout_width="135dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="WARTOŚĆ [zł]"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#000000" />
+        <TextView
+
+            android:layout_width="135dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="ILOŚĆ [kg]"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
 
-        android:id="@+id/product_list_recycler"
-        android:layout_width="330dp"
-        android:layout_height="545dp"
+        android:id="@+id/card_list_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="310dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="38dp"
-        android:background="@drawable/frame_select"
-        android:padding="30dp" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonBackToProduct"
-        android:layout_width="145dp"
-        android:layout_height="39dp"
-        android:layout_above="@+id/buttonloggin"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="26dp"
-        android:layout_marginBottom="-134dp"
-        android:background="@drawable/buttonhello"
-        android:text="złóż zamówienie"
-        app:backgroundTint="#02883E"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.939"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonBackToShop"
-        android:layout_width="200dp"
-        android:layout_height="49dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="104dp"
-        android:layout_marginBottom="111dp"
-        android:background="@drawable/buttonhello"
-        android:text="Wróć do sklepu "
-        app:backgroundTint="#02883E"
-        app:layout_constraintBottom_toTopOf="@+id/buttonBackToProduct"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:layout_width="75dp"
-        android:layout_height="80dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginTop="226dp"
+        android:background="@drawable/frame_select" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/pressToDelivery"
+        android:layout_width="wrap_content"
+        android:layout_height="68dp"
+        android:layout_below="@+id/card_list_recycler"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="82dp"
-        android:layout_marginTop="61dp"
-        android:layout_marginEnd="26dp"
-        android:layout_marginBottom="590dp"
-        android:layout_toEndOf="@+id/product_list_recycler"
-        android:src="@drawable/cartshopp" />
+
+        android:layout_marginStart="232dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginBottom="89dp"
+        android:background="@drawable/buttonhello"
+        android:text="Przejdź do dostawy"
+        app:backgroundTint="#02883E" />
+
 
 </RelativeLayout>

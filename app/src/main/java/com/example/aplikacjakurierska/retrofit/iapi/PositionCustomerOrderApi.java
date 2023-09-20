@@ -1,8 +1,8 @@
 package com.example.aplikacjakurierska.retrofit.iapi;
 
 import com.example.aplikacjakurierska.retrofit.model.CustomerOrder;
-import com.example.aplikacjakurierska.retrofit.model.GeneralAdvertisement;
 import com.example.aplikacjakurierska.retrofit.model.PositionCustomerOrder;
+import com.example.aplikacjakurierska.retrofit.model.PositionCustomerOrderWithProductNameDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,13 +18,51 @@ import retrofit2.http.Path;
 public interface PositionCustomerOrderApi {
 
     @POST("/pco/add")
-    Call<PositionCustomerOrder> add(@Body PositionCustomerOrder positionCustomerOrder);
-    @GET("/pco/get")
-    Call<List<PositionCustomerOrder>> getAll();
-    @GET("/pco/get/{id}")
-    Call<Optional<PositionCustomerOrder>> getById(@Path("id")Long id);
-    @PUT("/pco/edit/{id}")
-    Call<PositionCustomerOrder> editById(@Path("id")Long id,@Body PositionCustomerOrder positionCustomerOrder);
-    @DELETE("/pco/delete/{id}")Call<Void>deleteById(@Path("id")Long id);
+    Call<PositionCustomerOrder> add(
+//            @Header("Authorization")String token,
+            @Body PositionCustomerOrder positionCustomerOrder);
 
-}
+    @GET("/pco/get")
+    Call<List<PositionCustomerOrder>> getAll(
+//            @Header("Authorization")String token
+    );
+
+    @GET("/pco/get/{id}")
+    Call<Optional<PositionCustomerOrder>> getById(
+//            @Header("Authorization")String token,
+            @Path("id") Long id);
+
+    @PUT("/pco/edit/{id}")
+    Call<PositionCustomerOrder> editById(
+//            @Header("Authorization")String token,
+            @Path("id") Long id, @Body PositionCustomerOrder positionCustomerOrder);
+
+    @DELETE("/pco/delete/{id}")
+    Call<Void> deleteById(
+//            @Header("Authorization")String token,
+            @Path("id") Long id);
+
+    @POST("/pco/add_and_add/{userId}")
+    Call<Optional<PositionCustomerOrder>> addPositionAndAddToCart(
+            @Body PositionCustomerOrder positionCustomerOrder,
+            @Path("userId") Long userId);
+
+
+    @GET("/pco/alll/{userId}")
+    Call<List<PositionCustomerOrderWithProductNameDTO>> getAllPositionCustomerOrdersWithProductNamesByUserId(@Path("userId") Long userId);
+
+    @GET("/pco/get_all_by_cart_shop_id/{cartShopId}")
+    Call<List<PositionCustomerOrder>> getByCartShopId(@Path("cartShopId") Long cartShopId);
+
+    @POST("/pco/create_order/{userId}")
+    Call<List<PositionCustomerOrder>> createOrder(@Body CustomerOrder customerOrder, @Path("userId") Long userId);
+
+    @GET("/pco/get_by_co/{id}")
+    Call<List<PositionCustomerOrderWithProductNameDTO>> getByCustomerOrderId(@Path("id") Long id);
+
+    @GET("/pco/history_order_by_customer_order/{customer_orderId}")
+    Call<List<PositionCustomerOrderWithProductNameDTO>> getAllPositionCustomerOrdersWithProductNamesByOrderId(@Path("customer_orderId") Long customer_orderId);
+
+
+    }
+

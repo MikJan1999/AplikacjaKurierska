@@ -12,8 +12,10 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aplikacjakurierska.ActivityCustomer.AddAdvertisementCustomer;
 import com.example.aplikacjakurierska.ActivityCustomer.AddingProductsCustomerActivity;
 import com.example.aplikacjakurierska.R;
 import com.example.aplikacjakurierska.retrofit.AuthenticationRequest;
@@ -35,10 +37,18 @@ Animation scaleUp,scaleDown;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 login();
-
+moveToRegister();
 
     }
-
+public void moveToRegister(){
+    TextView textViewRegister = findViewById(R.id.textViewRegister);
+    textViewRegister.setOnClickListener(view -> {
+        Intent secondActivityIntent = new Intent(
+                getApplicationContext(), RegistrationActivity.class
+        );
+        startActivity(secondActivityIntent);
+    });
+}
 
     private void login(){
         Button buttonLogin = findViewById(R.id.buttonLoginCredentials);
@@ -49,58 +59,45 @@ login();
 buttonLogin.setOnClickListener(view -> {
     String emails = String.valueOf(email.getText());
     String passwords = String.valueOf(password.getText());
-
+    if(emails.isEmpty() || passwords.isEmpty()){
+        Toast.makeText(this, "Wprowadź wszystkie dane", Toast.LENGTH_SHORT).show();
+    }else{
     AuthenticationRequest authenticationRequest = new AuthenticationRequest();
     authenticationRequest.setEmail(emails);
     authenticationRequest.setPassword(passwords);
-    registerRequestApi.authenticate(authenticationRequest).enqueue(new Callback<AuthenticationResponse>() {
-        @Override
-        public void onResponse(Call<AuthenticationResponse> call, Response<AuthenticationResponse> response) {
-            Toast.makeText(LoginActivity.this, "Logowanie powiodło się", Toast.LENGTH_SHORT).show();
-            String token = response.body().getToken();
+        registerRequestApi.authenticate(authenticationRequest).enqueue(new Callback<AuthenticationResponse>() {
 
-            SharedPreferences sp = getSharedPreferences("main",0);
+            @Override
+            public void onResponse(Call<AuthenticationResponse> call, Response<AuthenticationResponse> response) {
+                Toast.makeText(LoginActivity.this, "Logowanie powiodło się", Toast.LENGTH_SHORT).show();
+                String token = response.body().getToken();
+                String role = response.body().getRole();
+                Long id = response.body().getId();
+                SharedPreferences sp = getSharedPreferences("main",0);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("token",token);
+                editor.putString("role",role);
+                editor.putLong("id",id);
+                editor.commit();
+                String role2 = sp.getString("role",null);
+                String token2 = sp.getString("token", null);
+                System.out.println( "Token po zalogowaniu:  "+ token2);
+                System.out.println( "Rola po zalogowaniu:  "+ role2);
+                Intent secondActivityIntent1 = new Intent(getApplicationContext(), HelloActivity.class);
+                startActivity(secondActivityIntent1);
+            }
 
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putString("token",token);
-            editor.commit();
-            String token2 = sp.getString("token", null);
-            System.out.println( "Token po zalogowaniu:  "+ token2);
-            Intent secondActivityIntent1 = new Intent(
-                    getApplicationContext(), AddingProductsCustomerActivity.class);
-            startActivity(secondActivityIntent1);
-        }
+            @Override
+            public void onFailure(Call<AuthenticationResponse> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Logowanie nie powiodło się", Toast.LENGTH_SHORT).show();
 
-        @Override
-        public void onFailure(Call<AuthenticationResponse> call, Throwable t) {
-            Toast.makeText(LoginActivity.this, "Logowanie nie powiodło się", Toast.LENGTH_SHORT).show();
-
-        }
-    });
-});
-
-
-
-
-
-
+            }
+        });
     }
-private void openNewActivity(){
-    Button buttonSecondActivity = findViewById(
-            R.id.buttonBackToShop
-    );
-    buttonSecondActivity.setOnClickListener(view -> {
-        Intent secondActivityIntent = new Intent(
-                getApplicationContext(), AddingProductsCustomerActivity.class
-        );
-        startActivity(secondActivityIntent);
-        motiveButton();
-    });
-
-}
-
+});
+    }
 private void motiveButton(){
-    buttonlogin = findViewById(R.id.buttonloggin);
+
     scaleUp = AnimationUtils.loadAnimation(this,R.anim.scale_button);
     scaleDown = AnimationUtils.loadAnimation(this,R.anim.scale_down_button);
     buttonlogin.setOnTouchListener(new View.OnTouchListener() {

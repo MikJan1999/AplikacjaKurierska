@@ -1,12 +1,32 @@
 package com.example.aplikacjakurierska.retrofit;
 
 public class AuthenticationResponse {
+    private Long id;
     private String token;
     private String email;
+    private String role;
 
-    public AuthenticationResponse(String token, String email) {
+    public AuthenticationResponse(Long id ,String token, String email,String role) {
         this.token = token;
+        this.id = id;
         this.email = email;
+        this.role = role;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getEmail() {

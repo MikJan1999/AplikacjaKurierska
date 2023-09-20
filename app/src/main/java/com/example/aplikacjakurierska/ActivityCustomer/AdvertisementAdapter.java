@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aplikacjakurierska.R;
 import com.example.aplikacjakurierska.retrofit.model.GeneralAdvertisement;
+import com.example.aplikacjakurierska.retrofit.model.PositionCustomerOrderWithProductNameDTO;
 import com.example.aplikacjakurierska.retrofit.model.Product;
 
 import java.text.SimpleDateFormat;
@@ -86,4 +87,11 @@ GeneralAdvertisement generalAdvertisement = generalAdvertisements.get(position);
     public interface OnStudyListener{
         void onStudyClick(int position,long id);
         void onStudyLongClick(int position,long id);
-    }}
+    }
+
+    public void updateData(List<GeneralAdvertisement> newList) {
+        generalAdvertisements.clear();
+        generalAdvertisements.addAll(newList);
+        notifyDataSetChanged();
+    }
+}

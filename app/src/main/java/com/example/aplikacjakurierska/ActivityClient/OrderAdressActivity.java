@@ -3,35 +3,32 @@ package com.example.aplikacjakurierska.ActivityClient;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-
-import com.example.aplikacjakurierska.ActivityCustomer.AddingProductsCustomerActivity;
 import com.example.aplikacjakurierska.R;
 import com.example.aplikacjakurierska.retrofit.RetrofitServ;
-import com.example.aplikacjakurierska.retrofit.iapi.AddressApi;
-import com.example.aplikacjakurierska.retrofit.model.Address;
+import com.example.aplikacjakurierska.retrofit.iapi.PositionCustomerOrderApi;
+import com.example.aplikacjakurierska.retrofit.model.PositionCustomerOrderWithProductNameDTO;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class OrderAdressActivity extends AppCompatActivity {
-
+    private float priceOrder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_order);
+            addOrderAddressClient();
+            summPriceAll();
+
         Button backtoMainButton = (Button) findViewById(R.id.backToMain);
-addOrderAddressClient();
         backtoMainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,8 +36,34 @@ addOrderAddressClient();
             }
         });
     }
+
+    public void summPriceAll(){
+        RetrofitServ retrofitServ = new RetrofitServ();
+        PositionCustomerOrderApi positionCustomerOrderApi = retrofitServ.getRetrofit().create(PositionCustomerOrderApi.class);
+        positionCustomerOrderApi.getAllPositionCustomerOrdersWithProductNamesByUserId(1L).enqueue(new Callback<List<PositionCustomerOrderWithProductNameDTO>>() {
+            @Override
+            public void onResponse(Call<List<PositionCustomerOrderWithProductNameDTO>> call, Response<List<PositionCustomerOrderWithProductNameDTO>> response) {
+                List<PositionCustomerOrderWithProductNameDTO> pozycje = response.body();
+
+               priceOrder = pozycje.stream()
+                        .map(PositionCustomerOrderWithProductNameDTO::getPriceAll)
+                        .reduce(0f, Float::sum);
+
+//                System.out.println("Suma cen wszystkich pozycji: " + priceOrder);
+            }
+            @Override
+            public void onFailure(Call<List<PositionCustomerOrderWithProductNameDTO>> call, Throwable t) {
+
+            }});}
+
+
+
+
+
+
+
     private void addOrderAddressClient() {
-        SharedPreferences sp = getSharedPreferences("main",0);
+        SharedPreferences sp = getSharedPreferences("main", 0);
         String token1 = sp.getString("token", null);
 
 
@@ -53,44 +76,26 @@ addOrderAddressClient();
                 TextInputEditText numberHouse = findViewById(R.id.numberhouseAddress);
                 TextInputEditText village = findViewById(R.id.villageAddress);
                 TextInputEditText phoneNumber = findViewById(R.id.numberPhoneAddress);
-                RetrofitServ retrofitServ = new RetrofitServ();
-                AddressApi addressApi = retrofitServ.getRetrofit().create(AddressApi.class);
-                saveButton.setOnClickListener(views -> {
-                    String nameLastNames = String.valueOf(nameLastName.getText());
-                    String streets = String.valueOf(street.getText());
-                    String numberHouses = String.valueOf(numberHouse.getText());
-                    String villages = String.valueOf(village.getText());
-                    String phoneNumbers = String.valueOf(phoneNumber.getText());
+                Editable nameLastNameText = nameLastName.getText();
+                System.out.println("'gettTEXT = "+ nameLastNameText);
+                Editable streetText = street.getText();
+                Editable houseText = numberHouse.getText();
+                Editable villageText = village.getText();
+                Editable phoneNumberText =  phoneNumber.getText();
 
-                    Address addressAdd = new Address();
-                    addressAdd.setNameAndSurname(nameLastNames);
-                    addressAdd.setStreet(streets);
-                    addressAdd.setNumberOfHouse(Integer.parseInt(numberHouses));
-                    addressAdd.setVillage(villages);
-                    addressAdd.setNumberOfPhone(Integer.parseInt(phoneNumbers));
+                Intent addressData = new Intent(OrderAdressActivity.this,SummaryOrder.class);
+                addressData.putExtra("nameLastName",nameLastNameText.toString());
+                addressData.putExtra("street",streetText.toString());
+                addressData.putExtra("numberHouse",houseText.toString());
+                addressData.putExtra("village",villageText.toString());
+                addressData.putExtra("nummberPhone",phoneNumberText.toString());
+                addressData.putExtra("priceOrder",priceOrder);
+                System.out.println(priceOrder);
+                startActivity(addressData);
 
-                    addressApi.add(token1,addressAdd).enqueue(new Callback<Address>() {
-                        @Override
-                        public void onResponse(Call<Address> call, Response<Address> response) {
-                            Toast.makeText(OrderAdressActivity.this, "Pomyślnie zapisano adres", Toast.LENGTH_SHORT).show();
-
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<Address> call, Throwable t) {
-                            Toast.makeText(OrderAdressActivity.this, "Nie zapisano adresu", Toast.LENGTH_SHORT).show();
-                            Logger.getLogger(AddingProductsCustomerActivity.class.getName()).log(Level.SEVERE, "Error create new address ");
-                        }
-                    });
-                });
 
             }
         });
 
 
-    }
-
-
-
-}
+    }}

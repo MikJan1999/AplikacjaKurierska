@@ -1,5 +1,7 @@
 package com.example.aplikacjakurierska.retrofit.model;
 
+import java.util.List;
+
 public class User {
     private Long id;
     private String firstName;
@@ -8,17 +10,24 @@ public class User {
     private String password;
     private String role;
 
+    private List<CustomerOrder> customerOrders;
+    private CartShop cartShop;
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String email, String password, String role) {
+    public User(Long id, String firstName, String lastName,
+                String email, String password, String role,
+                List<CustomerOrder> customerOrders,CartShop cartShop) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.customerOrders = customerOrders;
+        this.cartShop = cartShop;
     }
+
 
     @Override
     public String toString() {
@@ -29,7 +38,25 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
+                ", customerOrders=" + customerOrders +
+                ", cartShop=" + cartShop +
                 '}';
+    }
+
+    public CartShop getCartShop() {
+        return cartShop;
+    }
+
+    public void setCartShop(CartShop cartShop) {
+        this.cartShop = cartShop;
+    }
+
+    public List<CustomerOrder> getCustomerOrders() {
+        return customerOrders;
+    }
+
+    public void setCustomerOrders(List<CustomerOrder> customerOrders) {
+        this.customerOrders = customerOrders;
     }
 
     public Long getId() {

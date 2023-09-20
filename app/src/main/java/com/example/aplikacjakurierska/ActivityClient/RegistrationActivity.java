@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
+import com.example.aplikacjakurierska.ActivityCustomer.AddAdvertisementCustomer;
 import com.example.aplikacjakurierska.R;
 import com.example.aplikacjakurierska.retrofit.AuthenticationResponse;
 import com.example.aplikacjakurierska.retrofit.RegisterRequest;
@@ -21,6 +22,7 @@ import com.example.aplikacjakurierska.retrofit.RetrofitServ;
 import com.example.aplikacjakurierska.retrofit.Role;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.sql.SQLOutput;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -34,43 +36,11 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-
+        registration();
         Animation scaleUp, scaleDown;
-       registration();
-    }
-    MasterKey getMasterKey() {
-        try {
-            KeyGenParameterSpec spec = new KeyGenParameterSpec.Builder(
-                    "_androidx_security_master_key_",
-                    KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
-                    .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-                    .setKeySize(256)
-                    .build();
 
-            return new MasterKey.Builder(this)
-                    .setKeyGenParameterSpec(spec)
-                    .build();
-        } catch (Exception e) {
-            Log.e(getClass().getSimpleName(), "Error on getting master key", e);
-        }
-        return null;
     }
 
-    public SharedPreferences getEncryptedSharedPreferences() {
-        try {
-            return (SharedPreferences) EncryptedSharedPreferences.create(
-                    Objects.requireNonNull(this),
-                    "your",
-                    getMasterKey(), // calling the method above for creating MasterKey
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-            );
-        } catch (Exception e) {
-            Log.e(getClass().getSimpleName(), "Error on getting encrypted shared preferences", e);
-        }
-        return null;
-    }
 
 
     private void registration(){
@@ -88,42 +58,51 @@ buttonRegister.setOnClickListener(view -> {
     String lastNames = String.valueOf(lastName.getText());
     String emails = String.valueOf(email.getText());
     String passwords = String.valueOf(password.getText());
-    String  repeatPasswords = String.valueOf(repeatPassword.getText());
+    String repeatPasswords = String.valueOf(repeatPassword.getText());
+    boolean ifs = passwords.equals(repeatPasswords);
+    if (names.isEmpty() || lastNames.isEmpty() || emails.isEmpty() || passwords.isEmpty() || repeatPasswords.isEmpty() || ifs == false) {
+        Toast.makeText(this, "Wprowadź prawidłowo wszystkie dane" , Toast.LENGTH_SHORT).show();
 
-    RegisterRequest registerRequestAdd = new RegisterRequest();
-    registerRequestAdd.setFirstName(names);
-    registerRequestAdd.setLastName(lastNames);
-    registerRequestAdd.setEmail(emails);
-    registerRequestAdd.setRole(Role.USER);
-    if (passwords.equals(repeatPasswords)){
+}else{RegisterRequest registerRequestAdd = new RegisterRequest();
+        registerRequestAdd.setFirstName(names);
+        registerRequestAdd.setLastName(lastNames);
+        registerRequestAdd.setEmail(emails);
         registerRequestAdd.setPassword(repeatPasswords);
+        registerRequestAdd.setRole(Role.USER);
+
+        registerRequestApi.registerPerson(registerRequestAdd).enqueue(new Callback<AuthenticationResponse>() {
+            @Override
+            public void onResponse(Call<AuthenticationResponse> call, Response<AuthenticationResponse> response) {
+                Toast.makeText(RegistrationActivity.this, "Rejestracja powiodła się", Toast.LENGTH_SHORT).show();
+                String token = response.body().getToken();
+                String email = response.body().getEmail();
+                Long id = response.body().getId();
+                String role = response.body().getRole();
+                System.out.println(token + "        email: " + email + "id: "+ id);
+
+                SharedPreferences sp = getSharedPreferences("main", 0);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("token", token);
+                editor.putLong("id",id);
+                editor.putString("role",role);
+                editor.commit();
+                String token1 = sp.getString("token", null);
+                System.out.println("Token po rejestracji :  " + token1);
+                String role2 = sp.getString("role",null);
+                Intent secondActivityIntent1 = new Intent(getApplicationContext(), HelloActivity.class);
+                startActivity(secondActivityIntent1);
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<AuthenticationResponse> call, Throwable t) {
+                Toast.makeText(RegistrationActivity.this, "Rejestracja nie powiodła się", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
-
-    registerRequestApi.registerPerson(registerRequestAdd).enqueue(new Callback<AuthenticationResponse>() {
-        @Override
-        public void onResponse(Call<AuthenticationResponse> call, Response<AuthenticationResponse> response) {
-            Toast.makeText(RegistrationActivity.this, "Zajebiście", Toast.LENGTH_SHORT).show();
-            String token = response.body().getToken();
-            String email = response.body().getEmail();
-            System.out.println(token + "        email: " + email) ;
-
-
-            SharedPreferences sp = getSharedPreferences("main",0);
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putString("token",token);
-            editor.commit();
-            String token1 = sp.getString("token", null);
-            System.out.println("Token po rejestracji :  "+ token1);
-//
-            openNewActivity();
-        }
-
-        @Override
-        public void onFailure(Call<AuthenticationResponse> call, Throwable t) {
-            Toast.makeText(RegistrationActivity.this, "Chujowo", Toast.LENGTH_SHORT).show();
-        }
-    });
-
 });
 
 
@@ -139,15 +118,7 @@ buttonRegister.setOnClickListener(view -> {
 
 
 
-    private void openNewActivity(){
-        Button buttonSecondActivity = findViewById(R.id.buttonRegister);
-        buttonSecondActivity.setOnClickListener(view -> {
-            Intent secondActivityIntent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(secondActivityIntent);
-//            motiveButton();
-        });
 
-    }
 //    private void motiveButton(){
 //
 //        buttonRegister = findViewById(R.id.buttonRegister);

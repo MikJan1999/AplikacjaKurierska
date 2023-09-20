@@ -22,7 +22,6 @@ public class ChooseProductAdapter extends RecyclerView.Adapter<ChooseProductAdap
     {
         this.monStudylistener = monStudylistener;
         this.productList = productList;
-
     }
     @Override
     public ChooseProductAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -42,7 +41,7 @@ public class ChooseProductAdapter extends RecyclerView.Adapter<ChooseProductAdap
         return productList.size();
     }
     public  class  ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        TextView productName, productPrice, productDescription;
+        TextView productName, productPrice, productDescription,wordCart;
         ChooseProductAdapter.OnStudyListener onStudyListener ;
         LinearLayout mainContainersLayout;
         public ViewHolder(@NonNull View itemView, ChooseProductAdapter.OnStudyListener onStudyListener) {
