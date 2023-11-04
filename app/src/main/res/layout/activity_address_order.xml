@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,7 +16,7 @@
 
     <include
         android:id="@+id/toolbarBack"
-        layout="@layout/toolbar_back"
+        layout="@layout/toolbar_client"
 
         app:layout_constraintBottom_toTopOf="@+id/streetAddress"
         tools:layout_editor_absoluteX="-16dp" />
@@ -108,3 +114,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

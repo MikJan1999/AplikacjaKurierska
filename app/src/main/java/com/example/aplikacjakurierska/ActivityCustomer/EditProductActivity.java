@@ -69,7 +69,7 @@ public static final int  REQUEST_CODE_EDIT_PRODUCT = 0;
             productadd.setProductPrice(Double.valueOf(priceproduct));
             productadd.setProductDescription(descriptionproduct);
             productApi.editById(
-//                    "Bearer "+token1,
+                    "Bearer "+token1,
                     Long.valueOf(id), productadd).enqueue(new Callback<Product>() {
                 @Override
                 public void onResponse(Call<Product> call, Response<Product> response) {

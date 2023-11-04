@@ -1,10 +1,12 @@
 package com.example.aplikacjakurierska.ActivityClient;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -46,9 +48,22 @@ Animation scaleUp,scaleDown;
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main_new);
-            viewListProduct();
+            viewListAdvertisement();
             advertisementAdapter = new AdvertisementAdapter(generalAdvertisements,monStudyListener,false);
-buttonViewProduct = findViewById(R.id.buttonViewProduct);
+            Toolbar toolbar = (Toolbar)findViewById(R.id.toolbarBack);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainNewActivity.this, HelloActivity.class);
+                    startActivity(intent);
+                }
+            });
+            toolbar.setNavigationOnClickListener(view -> onBackPressed());
+
+            buttonViewProduct = findViewById(R.id.buttonViewProduct);
 buttonViewProduct.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
@@ -82,25 +97,40 @@ buttonViewProduct.setOnTouchListener(new View.OnTouchListener() {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+            int id = item.getItemId();
 
-            case R.id.locationmenu:
-                Intent locationmenu = new Intent(this,OrderAdressActivity.class);
-            this.startActivity(locationmenu);
-            return true;
-            case R.id.addproductmenu:
-                Intent add = new Intent(this,ChooseProductActivity.class);
-                this.startActivity(add);
+
+            if (id == R.id.historyordermenu) {
+                Intent intent1 = new Intent(this,HistoryOrderActivity.class);
+                this.startActivity(intent1);
                 return true;
-            case R.id.shoppingcartmenu:
-                Intent shoppingcartmenu = new Intent(this,OrderAcitivty.class);
-                this.startActivity(shoppingcartmenu);
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+            }
+            if (id == R.id.cartShop) {
+                Intent intent2 = new Intent(this,OrderAcitivty.class);
+                this.startActivity(intent2);
+                return true;
+            }
+            if (id == R.id.shoppingcartmenu) {
+                Intent intent2 = new Intent(this,OrderAcitivty.class);
+                this.startActivity(intent2);
+                return true;
+            }
+
+            if (id == R.id.logoutmenu) {
+                SharedPreferences sharedPreferences = getSharedPreferences("main", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+                Intent intent2 = new Intent(this,LoginActivity.class);
+                this.startActivity(intent2);
+            }
+            return super.onOptionsItemSelected(item);
+
+
+
     }
 
-    private void viewListProduct() {
+    private void viewListAdvertisement() {
         SharedPreferences sp = getSharedPreferences("main",0);
         String token1 = sp.getString("token", null);
 

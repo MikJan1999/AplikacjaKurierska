@@ -1,9 +1,15 @@
 package com.example.aplikacjakurierska.ActivityClient;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -12,6 +18,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,11 +56,64 @@ public class HistoryOrderActivity extends AppCompatActivity implements HistoryOr
         viewListProduct();
 
         historyOrderAdapter = new HistoryOrderAdapter(new ArrayList<>(), monStudylistenerHistory);
-
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbarBack);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HistoryOrderActivity.this, MainNewActivity.class);
+                startActivity(intent);
+            }
+        });
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
 }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        getMenuInflater().inflate(R.menu.new_menu, menu);
+        return super.onCreateOptionsMenu(menu);    }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.historyordermenu) {
+            Intent intent1 = new Intent(this,HistoryOrderActivity.class);
+            this.startActivity(intent1);
+            finish();
+            return true;
+        }
+        if (id == R.id.cartShop) {
+            Intent intent2 = new Intent(this,OrderAcitivty.class);
+            this.startActivity(intent2);
+            finish();
+            return true;
+        }
+        if (id == R.id.shoppingcartmenu) {
+            Intent intent2 = new Intent(this,OrderAcitivty.class);
+            this.startActivity(intent2);
+            finish();
+            return true;
+        }
+        if (id == R.id.logoutmenu) {
+            SharedPreferences sharedPreferences = getSharedPreferences("main", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+            Intent intent2 = new Intent(this,LoginActivity.class);
+            startActivity(intent2);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
     public void onStudyClick(int position) {
+        SharedPreferences sp = getSharedPreferences("main",0);
+        String token1 = sp.getString("token", null);
+        Long userId = sp.getLong("id",0);
+
         if (position >= 0 && position < historyCustomerOrderLists.size()) {
             Long customerOrder = historyCustomerOrderLists.get(position).getId();
             // Reszta kodu...
@@ -82,7 +142,7 @@ dialog.setCanceledOnTouchOutside(true);
         }
 
         PositionCustomerOrderApi positionCustomerOrderApi = retrofitServ.getRetrofit().create(PositionCustomerOrderApi.class);
-        positionCustomerOrderApi.getAllPositionCustomerOrdersWithProductNamesByOrderId(customerOrder).enqueue(new Callback<List<PositionCustomerOrderWithProductNameDTO>>() {
+        positionCustomerOrderApi.getAllPositionCustomerOrdersWithProductNamesByOrderId("Bearer " +token1,customerOrder).enqueue(new Callback<List<PositionCustomerOrderWithProductNameDTO>>() {
             @Override
             public void onResponse(Call<List<PositionCustomerOrderWithProductNameDTO>> call, Response<List<PositionCustomerOrderWithProductNameDTO>> response) {
                 Toast.makeText(HistoryOrderActivity.this, "git", Toast.LENGTH_SHORT).show();
@@ -94,7 +154,6 @@ dialog.setCanceledOnTouchOutside(true);
                             dialoghistoryAdapter = new DialoghistoryAdapter(positionCustomerOrderWithProductNameDTOS);
                             recyclerViewHistory.setAdapter(dialoghistoryAdapter);
 
-
                         }else {
                             System.out.println("Pusta lista");
                         }
@@ -105,9 +164,7 @@ dialog.setCanceledOnTouchOutside(true);
                     System.out.println("błąd odpowiedzi");
                 }
                 Toast.makeText(HistoryOrderActivity.this, "pomylsnie zapisano", Toast.LENGTH_SHORT).show();
-
             }
-
             @Override
             public void onFailure(Call<List<PositionCustomerOrderWithProductNameDTO>> call, Throwable t) {
 
@@ -128,9 +185,9 @@ dialog.show();
 
 
     public   void viewListProduct() {
-//        SharedPreferences sp = getSharedPreferences("main",0);
-//        String token1 = sp.getString("token", null);
-//        Long userId = sp.getLong("id",0);
+        SharedPreferences sp = getSharedPreferences("main",0);
+        String token1 = sp.getString("token", null);
+        Long userId = sp.getLong("id",0);
         RecyclerView recyclerCard = findViewById(R.id.history_order_list_recycler);
         RetrofitServ retrofitServ = new RetrofitServ();
         CustomerOrderApi customerOrderApi = retrofitServ.getRetrofit().create(CustomerOrderApi.class);
@@ -139,8 +196,8 @@ dialog.show();
         recyclerCard.setLayoutManager(linearLayoutManager);
 
         customerOrderApi.findByUserId(
-//                "Bearer "+token1,
-                1L
+                "Bearer "+token1,
+                userId
         ).enqueue(new Callback<List<CustomerOrder>>() {
             @Override
             public void onResponse(Call<List<CustomerOrder>> call,
@@ -153,10 +210,6 @@ dialog.show();
                         if(!historyCustomerOrderLists.isEmpty()){
                             historyOrderAdapter    = new HistoryOrderAdapter(historyCustomerOrderLists, monStudylistenerHistory);
                             recyclerCard.setAdapter(historyOrderAdapter);
-
-                            System.out.println("GÓWNO");
-
-
                         }else {
                             System.out.println("Pusta lista");
                         }
@@ -168,7 +221,6 @@ dialog.show();
                 }
                 Toast.makeText(HistoryOrderActivity.this, "pomylsnie zapisano", Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onFailure(Call<List<CustomerOrder>> call, Throwable t) {
                 Toast.makeText(HistoryOrderActivity.this, "Nie zapisano jest bład", Toast.LENGTH_SHORT).show();

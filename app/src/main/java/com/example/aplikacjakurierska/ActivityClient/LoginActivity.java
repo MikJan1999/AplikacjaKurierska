@@ -69,22 +69,29 @@ buttonLogin.setOnClickListener(view -> {
 
             @Override
             public void onResponse(Call<AuthenticationResponse> call, Response<AuthenticationResponse> response) {
-                Toast.makeText(LoginActivity.this, "Logowanie powiodło się", Toast.LENGTH_SHORT).show();
-                String token = response.body().getToken();
-                String role = response.body().getRole();
-                Long id = response.body().getId();
-                SharedPreferences sp = getSharedPreferences("main",0);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("token",token);
-                editor.putString("role",role);
-                editor.putLong("id",id);
-                editor.commit();
-                String role2 = sp.getString("role",null);
-                String token2 = sp.getString("token", null);
-                System.out.println( "Token po zalogowaniu:  "+ token2);
-                System.out.println( "Rola po zalogowaniu:  "+ role2);
-                Intent secondActivityIntent1 = new Intent(getApplicationContext(), HelloActivity.class);
-                startActivity(secondActivityIntent1);
+                if (response.isSuccessful() && response.body() != null){
+                    AuthenticationResponse responseBody = response.body();
+                    Toast.makeText(LoginActivity.this, "Logowanie powiodło się", Toast.LENGTH_SHORT).show();
+                    String token = responseBody.getToken();
+                    String role = responseBody.getRole();
+                    Long id = responseBody.getId();
+                    SharedPreferences sp = getSharedPreferences("main",0);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("token",token);
+                    editor.putString("role",role);
+                    editor.putLong("id",id);
+                    editor.commit();
+                    String role2 = sp.getString("role",null);
+                    String token2 = sp.getString("token", null);
+                    System.out.println( "Token po zalogowaniu:  "+ token2);
+                    System.out.println( "Rola po zalogowaniu:  "+ role2);
+                    Intent secondActivityIntent1 = new Intent(getApplicationContext(), HelloActivity.class);
+                    startActivity(secondActivityIntent1);
+                }else{
+                    Toast.makeText(LoginActivity.this, "Brak użytkownika lub błędne hasło", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
 
             @Override

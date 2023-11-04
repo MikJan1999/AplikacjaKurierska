@@ -1,22 +1,14 @@
 package com.example.aplikacjakurierska.ActivityClient;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.aplikacjakurierska.R;
 import com.example.aplikacjakurierska.retrofit.model.PositionCustomerOrderWithProductNameDTO;
-import com.example.aplikacjakurierska.retrofit.model.Product;
-
-import java.util.ArrayList;
 import java.util.List;
-
 public class DialoghistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private List<PositionCustomerOrderWithProductNameDTO> productList;
@@ -46,6 +38,7 @@ public class DialoghistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ListViewHolder) {
             PositionCustomerOrderWithProductNameDTO positionCustomerOrderWithProductNameDTO = productList.get(position-1);
+            System.out.println(positionCustomerOrderWithProductNameDTO);
             ((ListViewHolder) holder).name.setText(positionCustomerOrderWithProductNameDTO.getProductName());
             ((ListViewHolder) holder).priceAll.setText(String.valueOf(positionCustomerOrderWithProductNameDTO.getPriceAll()));
             ((ListViewHolder) holder).amount.setText(String.valueOf(positionCustomerOrderWithProductNameDTO.getAmount()));

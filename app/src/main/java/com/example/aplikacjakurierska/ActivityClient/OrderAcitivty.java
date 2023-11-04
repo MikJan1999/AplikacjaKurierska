@@ -1,16 +1,21 @@
+
 package com.example.aplikacjakurierska.ActivityClient;
 
-
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,7 +39,7 @@ public class OrderAcitivty extends AppCompatActivity implements OrderAdapter.OnS
 
 private RecyclerView recyclerView;
     private OrderAdapter.OnStudyListener monStudylistener;
-
+private  boolean isCartEmpty = true;
     Button pressToDelivery;
     private List<PositionCustomerOrderWithProductNameDTO> cartproductList;
     OrderAdapter orderAdapter;
@@ -52,12 +57,66 @@ RecyclerView recyclerCard;
         pressToDelivery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(OrderAcitivty.this,OrderAdressActivity.class));
-            }});}
+                System.out.println( "sprawdzenie "+ cartproductList);
+//                if (isCartEmpty = true){
+//                    Toast.makeText(OrderAcitivty.this, "Twój koszyk jest pusty", Toast.LENGTH_SHORT).show();
+//                }else {
+                    startActivity(new Intent(OrderAcitivty.this,OrderAdressActivity.class));
+//                }
+            }});
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbarBack);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OrderAcitivty.this, MainNewActivity.class);
+                startActivity(intent);
+            }
+        });
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
+    }
 
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        getMenuInflater().inflate(R.menu.new_menu, menu);
+        return super.onCreateOptionsMenu(menu);    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.historyordermenu) {
+            Intent intent1 = new Intent(this,HistoryOrderActivity.class);
+            this.startActivity(intent1);
+            return true;
+        }
+        if (id == R.id.cartShop) {
+            Intent intent2 = new Intent(this,OrderAcitivty.class);
+            this.startActivity(intent2);
+            return true;
+        }
+        if (id == R.id.shoppingcartmenu) {
+            Intent intent2 = new Intent(this,OrderAcitivty.class);
+            this.startActivity(intent2);
+            return true;
+        }
+        if (id == R.id.logoutmenu) {
+            SharedPreferences sharedPreferences = getSharedPreferences("main", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+            Intent intent2 = new Intent(this,LoginActivity.class);
+            this.startActivity(intent2);
+        }
+
+        return super.onOptionsItemSelected(item);
+
+    }
 
 
 
@@ -74,8 +133,8 @@ public   void viewListProduct() {
     recyclerCard.setLayoutManager(linearLayoutManager);
 
     positionCustomerOrderApi.getAllPositionCustomerOrdersWithProductNamesByUserId(
-//                "Bearer "+token1,
-                1L
+                "Bearer "+token1,
+                userId
     ).enqueue(new Callback<List<PositionCustomerOrderWithProductNameDTO>>() {
         @Override
         public void onResponse(Call<List<PositionCustomerOrderWithProductNameDTO>> call,
@@ -87,7 +146,7 @@ public   void viewListProduct() {
                     if(!cartproductList.isEmpty()){
                         orderAdapter = new OrderAdapter(cartproductList,monStudylistener);
                         recyclerCard.setAdapter(orderAdapter);
-
+                        isCartEmpty = false;
 
                     }else {
                         System.out.println("Pusta lista");
@@ -136,7 +195,7 @@ public   void viewListProduct() {
                         PositionCustomerOrderApi positionCustomerOrderApi = retrofitServ.getRetrofit().create(PositionCustomerOrderApi.class);
 
                         positionCustomerOrderApi.deleteById(
-//                                "Bearer "+token1,
+                                "Bearer "+token1,
                                 Long.valueOf(id)).enqueue(new Callback<Void>() {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,7 +11,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/login"
     tools:context=".ActivityClient.RegistrationActivity">
-
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/editTextTextPersonName"
@@ -69,7 +73,7 @@
         android:background="@drawable/text_input"
         android:ems="10"
         android:hint="Hasło"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:textColor="#02883E"
         android:textColorHint="#02883E"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
@@ -87,7 +91,7 @@
         android:background="@drawable/text_input"
         android:ems="10"
         android:hint="Powtórz hasło"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:textColor="#02883E"
         android:textColorHint="#02883E"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
@@ -125,3 +129,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

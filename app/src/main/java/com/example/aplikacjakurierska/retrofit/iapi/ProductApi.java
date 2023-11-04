@@ -17,17 +17,17 @@ import retrofit2.http.Path;
 public interface ProductApi {
 
     @POST("/product/add") Call<Product> add(
-//            @Header("Authorization")String token,
+            @Header("Authorization")String token,
             @Body Product product);
     @GET("/product/get") Call<List<Product>> getAll(
-//            @Header("Authorization")String token
+            @Header("Authorization")String token
            );
     @GET("/product/get/{id}") Call<Optional<Product>> getById(@Path("id")Long id);
     @PUT("/product/edit/{id}") Call<Product> editById(
-//            @Header("Authorization")String token,
+            @Header("Authorization")String token,
             @Path("id")Long id,
             @Body Product product);
     @DELETE("/product/delete/{id}")Call<Void>deleteById(
-//            @Header("Authorization")String token,
+            @Header("Authorization")String token,
             @Path("id")Long id);
 }

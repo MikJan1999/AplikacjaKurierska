@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/customer_menu">
+    >
+
+
+        <item
+            android:id="@+id/allordermenuCustomer"
+            android:title="Wszystkie zamówienia"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/addProductMenuCustomer"
+            android:title="Dodaj Produkt"
+            android:icon="@drawable/add_product"
+            app:showAsAction="always"/>
+
+        <item
+            android:id="@+id/locationMenuCustomer"
+            android:title="Dane kontaktowe"
+            android:icon="@drawable/locationgraf"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/logoutMenuCustomer"
+            android:title="Wyloguj się"
+            app:showAsAction="never"/>
+
+
+</menu>

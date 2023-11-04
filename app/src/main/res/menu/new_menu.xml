@@ -9,31 +9,23 @@
         app:showAsAction="never"/>
 
     <item
-        android:id="@+id/productmenu"
-        android:title="Produkty"
-        app:showAsAction="never"/>
-
-
-
-    <item
-        android:id="@+id/logoutmenu"
-        android:title="Wyloguj się"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/addproductmenu"
+        android:id="@+id/cartShop"
         android:title="Dodaj Produkt"
-        android:icon="@drawable/addgraf"
+        android:icon="@drawable/cart_shop"
         app:showAsAction="always"/>
     <item
         android:id="@+id/shoppingcartmenu"
         android:title="Koszyk"
         android:icon="@drawable/shopping_cart"
-        app:showAsAction="always"/>
+        app:showAsAction="never"/>
     <item
         android:id="@+id/locationmenu"
-        android:title="Adres dostawy"
+        android:title="Kontakt"
         android:icon="@drawable/locationgraf"
-        app:showAsAction="always"/>
-
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/logoutmenu"
+        android:title="Wyloguj się"
+        app:showAsAction="never"/>
 
 </menu>

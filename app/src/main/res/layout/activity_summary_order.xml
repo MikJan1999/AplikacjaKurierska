@@ -1,19 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/background_main">
+    <include
+        android:id="@+id/toolbarBack"
+        layout="@layout/toolbar_client"
+        tools:layout_editor_absoluteX="-16dp" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Dostawa realizowana na adres:"
+        android:textColor="#9CC56C"
+        android:textSize="16sp"
+
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        tools:layout_editor_absoluteX="0dp" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linearLayoutCompat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
+
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:layout_editor_absoluteX="1dp">
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        tools:layout_editor_absoluteX="0dp">
 
         <TextView
             android:id="@+id/nameLastNameSummaryOrder"
@@ -24,8 +51,8 @@
             android:hint="Imię i nazwisko"
             android:padding="5dp"
             android:textColor="#9CC56C"
-            android:textStyle="bold"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +67,8 @@
                 android:padding="5dp"
                 android:text="Ul."
                 android:textColor="#9CC56C"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/streetSummaryOrder"
@@ -51,7 +79,8 @@
                 android:hint="Ulica"
                 android:padding="5dp"
                 android:textColor="#9CC56C"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/numberHouseSummaryOrder"
@@ -62,8 +91,10 @@
                 android:hint="Nr.domu/mieszkania"
                 android:padding="5dp"
                 android:textColor="#9CC56C"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,8 +110,10 @@
                 android:hint="Miejscowość"
                 android:padding="5dp"
                 android:textColor="#9CC56C"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -94,7 +127,8 @@
                 android:padding="5dp"
                 android:text="Tel. "
                 android:textColor="#9CC56C"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/numberPhoneSummaryOrder"
@@ -105,85 +139,27 @@
                 android:hint="numer telefonu"
                 android:padding="5dp"
                 android:textColor="#9CC56C"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="15dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat">
-
-        <TextView
-
-            android:layout_width="139dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="NAZWA"
-            android:textSize="16dp"
-            android:textStyle="bold" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#000000" />
-
-        <TextView
-
-            android:layout_width="135dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="WARTOŚĆ [zł]"
-            android:textSize="16dp"
-            android:textStyle="bold" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#000000" />
-
-        <TextView
-
-            android:layout_width="135dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="ILOŚĆ [kg]"
-            android:textSize="16dp"
-            android:textStyle="bold" />
-    </LinearLayout>
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView1"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="serif"
         android:gravity="center"
         android:text="Podsumowanie zamówienia"
         android:textColor="#9CC56C"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-
-        android:id="@+id/card_list_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-
-        android:background="@drawable/frame_select"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarBack" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -202,7 +178,8 @@
             android:padding="5dp"
             android:text="Łączny koszt zamówienia: "
             android:textColor="#9CC56C"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/summaryPriceOrder"
@@ -213,7 +190,8 @@
             android:hint="kwota"
             android:padding="5dp"
             android:textColor="#9CC56C"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -222,15 +200,17 @@
             android:text=" zł"
             android:padding="5dp"
             android:textColor="#9CC56C"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
     </LinearLayout>
+
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -247,6 +227,21 @@
     </ScrollView>
 
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:text="Podsumowanie zamówienia"
+        android:textColor="#9CC56C"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarBack" />
+
     <Button
         android:id="@+id/createOrder"
         android:layout_width="wrap_content"
@@ -257,9 +252,21 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat"
+        app:layout_constraintVertical_bias="0.278" />
+
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:id="@+id/card_list_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+
+        android:layout_marginTop="40dp"
+        android:background="@drawable/frame_select"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:layout_editor_absoluteX="0dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

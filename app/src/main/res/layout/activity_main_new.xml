@@ -7,33 +7,30 @@
 android:layout_gravity="center"
     tools:context=".ActivityClient.MainNewActivity"
     android:background="@drawable/background_main">
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:gravity="center"
-        android:text="Aktualności"
-        android:textSize="32dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
+    <include
+        android:id="@+id/toolbarBack"
+        layout="@layout/toolbar_client"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonViewProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="92dp"
+        android:layout_marginBottom="140dp"
         android:background="@drawable/button_add_product"
         android:text="PRZEGLĄD PRODUKTÓW"
         android:textColor="#FF521616"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_advert"
@@ -50,20 +47,17 @@ android:layout_gravity="center"
     </androidx.recyclerview.widget.RecyclerView>
 
 
-
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="170dp"
         android:layout_height="122dp"
-        android:layout_marginTop="144dp"
         android:background="@drawable/frame_select"
         app:layout_constraintBottom_toTopOf="@+id/buttonViewProduct"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.043"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarBack"
+        app:layout_constraintVertical_bias="0.172"
         app:srcCompat="@drawable/image" />
 
 

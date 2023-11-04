@@ -1,13 +1,15 @@
 package com.example.aplikacjakurierska.ActivityClient;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SummaryOrder extends AppCompatActivity implements OrderAdapter.OnStudyListener {
+public class SummaryOrderActivity extends AppCompatActivity implements OrderAdapter.OnStudyListener {
     private List<PositionCustomerOrderWithProductNameDTO> cartproductList;
     private OrderAdapter.OnStudyListener monStudylistener;
     private RecyclerView recyclerView;
@@ -41,18 +43,33 @@ public class SummaryOrder extends AppCompatActivity implements OrderAdapter.OnSt
 viewSummaryOrder();
 
 createOrder();
-
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbarBack);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SummaryOrderActivity.this, OrderAdressActivity.class);
+                startActivity(intent);
+            }
+        });
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
     }
 
 private void viewSummaryOrder(){
+    SharedPreferences sp = getSharedPreferences("main",0);
+    String token1 = sp.getString("token", null);
+    Long userId = sp.getLong("id",0);
+
     RetrofitServ retrofitServ = new RetrofitServ();
     PositionCustomerOrderApi positionCustomerOrderApi = retrofitServ.getRetrofit().create(PositionCustomerOrderApi.class);
     RecyclerView recyclerCard = findViewById(R.id.card_list_recycler);
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
     linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
     recyclerCard.setLayoutManager(linearLayoutManager);
-    positionCustomerOrderApi.getAllPositionCustomerOrdersWithProductNamesByUserId(1L).enqueue(new Callback<List<PositionCustomerOrderWithProductNameDTO>>() {
+    positionCustomerOrderApi.getAllPositionCustomerOrdersWithProductNamesByUserId("Bearer "+token1,userId).enqueue(new Callback<List<PositionCustomerOrderWithProductNameDTO>>() {
         @Override
         public void onResponse(Call<List<PositionCustomerOrderWithProductNameDTO>> call, Response<List<PositionCustomerOrderWithProductNameDTO>> response) {
             if(response.isSuccessful()){
@@ -73,17 +90,20 @@ private void viewSummaryOrder(){
             }else {
                 System.out.println("błąd odpowiedzi");
             }
-            Toast.makeText(SummaryOrder.this, "pomylsnie zapisano", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SummaryOrderActivity.this, "pomylsnie zapisano", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onFailure(Call<List<PositionCustomerOrderWithProductNameDTO>> call, Throwable t) {
-            Toast.makeText(SummaryOrder.this, "Nie zapisano jest bład", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SummaryOrderActivity.this, "Nie zapisano jest bład", Toast.LENGTH_SHORT).show();
 
         }
     });
 }
 private void createOrder(){
+    SharedPreferences sp = getSharedPreferences("main",0);
+    String token1 = sp.getString("token", null);
+    Long userId = sp.getLong("id",0);
 
     Button createOrderButton = findViewById(R.id.createOrder);
     TextInputEditText descOrder = findViewById(R.id.descOrder);
@@ -124,15 +144,19 @@ private void createOrder(){
     newCustomer.setDescription(descOrder.getText().toString());
 
 
-    positionCustomerOrderApi.createOrder(newCustomer,1L).enqueue(new Callback<List<PositionCustomerOrder>>() {
+    positionCustomerOrderApi.createOrder("Bearer "+token1,newCustomer,userId).enqueue(new Callback<List<PositionCustomerOrder>>() {
         @Override
         public void onResponse(Call<List<PositionCustomerOrder>> call, Response<List<PositionCustomerOrder>> response) {
-            Toast.makeText(SummaryOrder.this, "Zamówienie zostało złożone", Toast.LENGTH_SHORT).show();
+            Intent intent2 = new Intent(SummaryOrderActivity.this,ChooseProductActivity.class);
+           startActivity(intent2);
+           finish();
+            Toast.makeText(SummaryOrderActivity.this, "Zamówienie zostało złożone", Toast.LENGTH_SHORT).show();
+
         }
 
         @Override
         public void onFailure(Call<List<PositionCustomerOrder>> call, Throwable t) {
-            Toast.makeText(SummaryOrder.this, "Nie udało się złożyć zamówienia", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SummaryOrderActivity.this, "Nie udało się złożyć zamówienia", Toast.LENGTH_SHORT).show();
         }
     });
 

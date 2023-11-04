@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/activityOrders"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,30 +10,45 @@
     tools:context=".ActivityClient.HistoryOrderActivity"
     android:background="@drawable/background_main"
     >
+    <include
+        android:id="@+id/toolbarBack"
+        layout="@layout/toolbar_client"
+
+        />
+
 
     <TextView
+        android:id="@+id/textView7"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="602dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="84dp"
         android:gravity="center"
         android:text="Historia zamówień"
         android:textSize="25dp"
-        android:textStyle="bold"></TextView>
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarBack"
+        tools:layout_editor_absoluteX="0dp"></TextView>
 
-    
-
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="87dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/book"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <androidx.recyclerview.widget.RecyclerView
 
         android:id="@+id/history_order_list_recycler"
         android:layout_width="match_parent"
         android:layout_height="310dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="226dp"
-        android:background="@drawable/frame_select" />
 
 
-</RelativeLayout>
+        android:layout_marginTop="64dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

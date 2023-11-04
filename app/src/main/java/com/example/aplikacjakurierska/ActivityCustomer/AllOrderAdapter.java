@@ -7,14 +7,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.aplikacjakurierska.ActivityClient.DialoghistoryAdapter;
-import com.example.aplikacjakurierska.ActivityClient.HistoryOrderAdapter;
 import com.example.aplikacjakurierska.R;
 import com.example.aplikacjakurierska.retrofit.model.CustomerOrder;
-import com.example.aplikacjakurierska.retrofit.model.PositionCustomerOrderWithProductNameDTO;
 
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class AllOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -37,7 +33,7 @@ public class AllOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         View view;
         if (viewType == TYPE_LIST) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_product_list2, parent, false);
-            return new ListViewHolder(view);
+            return new ListViewHolder(view,monStudylistener);
         } else if (viewType == TYPE_HEAD) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.title, parent, false);
             return new HeadViewHolders(view);
@@ -50,8 +46,9 @@ public class AllOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof ListViewHolder) {
             CustomerOrder customerOrder = customerOrderList.get(position-1);
             ((ListViewHolder) holder).name.setText(customerOrder.getNameAndSurname());
-            ((ListViewHolder) holder).data.setText(String.valueOf(customerOrder.getDataCreateOrder()));
-            ((ListViewHolder) holder).status.setText(String.valueOf(customerOrder.getStatusOrder()));
+            ((ListViewHolder) holder).data.setText(customerOrder.getDataCreateOrder().toString());
+            System.out.println(customerOrder.getDataCreateOrder());
+            ((ListViewHolder) holder).status.setText(customerOrder.getStatusOrder().getNazwa());
         } else if (holder instanceof HeadViewHolders) {
             ((HeadViewHolders) holder).titleName.setText("Imię i nazwisko");
             ((HeadViewHolders) holder).titleData.setText("Data");
@@ -72,18 +69,31 @@ public class AllOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return customerOrderList.size()+1;
     }
 
-    public class ListViewHolder extends RecyclerView.ViewHolder  {
+    public class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
         TextView name, data, status;
-
-        public ListViewHolder(@NonNull View itemView) {
+AllOrderAdapter.OnStudyListener onStudyListener;
+        public ListViewHolder(@NonNull View itemView, AllOrderAdapter.OnStudyListener onStudyListener) {
             super(itemView);
+
             name = itemView.findViewById(R.id.productNameCart2);
             data = itemView.findViewById(R.id.productPriceAllCart2);
             status = itemView.findViewById(R.id.productAmountCard2);
-
+            this.onStudyListener = onStudyListener;
+            itemView.setOnLongClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
 
+        @Override
+        public void onClick(View view) {
+            onStudyListener.onStudyClick(getBindingAdapterPosition()-1);
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            onStudyListener.onStudyLongClick(getBindingAdapterPosition()-1, customerOrderList.get(getBindingAdapterPosition()-1).getId());
+            return true;
+        }
     }
 
     public class HeadViewHolders extends RecyclerView.ViewHolder {
@@ -101,4 +111,6 @@ public class AllOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         void onStudyLongClick(int position,long id);
 
     }
+
+
 }
